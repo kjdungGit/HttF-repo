@@ -29,3 +29,11 @@ Shared memory for alpha, beta, ci, Arch, and Krypton. Role and delegation instru
 - **Krypton:** Sent Arch a research agenda covering customer/buyer validation, fleet-tool differentiation, development and neglected-issue opportunities, and credible demo metrics. Faster triage and assignment remain hypotheses; no external research was performed.
 - **Status:** Both reviews completed without file edits or implementation. All five agents were notified that the roster and memory files are available.
 - **Next owner:** alpha collects reviewed recommendations and coordinates future assignments; implementation awaits assignment.
+
+## 2026-10-02T16:21:51-05:00 — Primary agent — AI workflow relocation
+
+- **User request:** Keep AI instructions, role definitions, and collective memory in a side folder rather than the application tree.
+- **Changes:** Moved root AGENTS.md, Agentic.md, and Mem.md into ai-workflow/; moved frontend AGENTS.md and CLAUDE.md into ai-workflow/frontend/. Updated active relative references; historical paths above describe their original locations.
+- **Runtime configuration:** Disabled Next.js agentRules auto-generation to prevent frontend instruction files from returning on startup.
+- **Workflow:** Explicitly load ai-workflow/ instructions for future AI work. TASKS.md remains the product task list at repository root.
+- **Validation:** Frontend lint, TypeScript, startup, and HTTP response passed; AI instruction files were not regenerated inside the application. Changes remain uncommitted.

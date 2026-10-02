@@ -34,4 +34,4 @@ Build a human-centered operational tool for Hack to the Future that demonstrates
 - Identify the target customer and buyer, the workflow being improved, and how the product lowers costs, speeds up work, or unlocks useful intelligence.
 - Explain how the MVP could scale across equipment fleets and integrate with enterprise systems. Distinguish implemented functionality from future plans.
 - Favor a complete, convincing demonstration over unrelated features. Allocate remaining effort to frontend polish and a clear business pitch.
-- Keep the existing ordered starter tasks in `TASKS.md` as the initial foundation; these objectives guide subsequent product development and do not imply that the full workflow is already implemented.
+- Keep the existing ordered starter tasks in `../TASKS.md` as the initial foundation; these objectives guide subsequent product development and do not imply that the full workflow is already implemented.

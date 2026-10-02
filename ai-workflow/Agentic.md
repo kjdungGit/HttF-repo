@@ -1,6 +1,6 @@
 # Subagent roster and operating instructions
 
-This is the single source for subagent personalities, skills, responsibilities, and delegation. Product objectives live in `AGENTS.md`; ordered work lives in `TASKS.md`; collective memory lives in `Mem.md`. Read all four before starting work. User instructions take precedence.
+This is the single source for subagent personalities, skills, responsibilities, and delegation. Product objectives live in `AGENTS.md`; ordered work lives in `../TASKS.md`; collective memory lives in `Mem.md`. Read all four before starting work. User instructions take precedence.
 
 Names below are the canonical project names. Runtime identifiers refer to the agents created in this chat and may change in a new session; this document does not itself start agents.
 
@@ -25,7 +25,7 @@ These are role competencies, not claims that additional tools, credentials, or s
 
 ## Current priorities
 
-- Complete and validate the blank FastAPI/SQLite foundation before the frontend task in `TASKS.md`.
+- Complete and validate the blank FastAPI/SQLite foundation before the frontend task in `../TASKS.md`.
 - Then build `Header` and `LandingPage`, with `Template` in the header, heading, and browser title.
 - Develop the larger hackathon workflow only as subsequently assigned. Flesh out the backend needed for the demonstration, then concentrate polish on frontend usability and presentation.
 - Do not begin implementation solely because an agent role exists. Work within the current assignment and preserve other agents' and users' changes.
