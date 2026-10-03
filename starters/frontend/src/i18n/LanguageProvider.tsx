@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, type ReactNode } from 'react';
 import i18n from './client';
+import { ServiceTransitionHost } from '@/components/GoToService';
 
 /** Restore the locale after hydration so server and initial browser HTML agree. */
 export default function LanguageProvider({ children }: { children: ReactNode }) {
@@ -17,5 +18,10 @@ export default function LanguageProvider({ children }: { children: ReactNode }) 
     else update(i18n.language);
     return () => { i18n.off('languageChanged', update); };
   }, []);
-  return children;
+  return (
+    <>
+      {children}
+      <ServiceTransitionHost />
+    </>
+  );
 }

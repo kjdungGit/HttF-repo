@@ -1,5 +1,6 @@
 import Link from "next/link";
 import UserMenu from "@/components/UserMenu";
+import { GoToServiceLink } from "@/components/GoToService";
 
 export default function Header({ kicker = "Champaign · 2025" }: { kicker?: string }) {
   return (
@@ -21,6 +22,7 @@ export default function Header({ kicker = "Champaign · 2025" }: { kicker?: stri
         </div>
         <div className="flex items-center gap-4">
           <p className="hidden text-sm text-black/70 md:block">Illinois taxes, explained plainly</p>
+          <GoToServiceLink />
           <UserMenu />
         </div>
       </div>
