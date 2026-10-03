@@ -10,6 +10,7 @@
   --panel: #f6f7f9;
   --line: #d4d4d4;
   --check: #1f8a3b;
+  --miss: #c62828;
 }
 
 @theme inline {
@@ -20,6 +21,7 @@
   --color-uiuc: var(--illinois-blue);
   --color-ink: var(--ink);
   --color-check: var(--check);
+  --color-miss: var(--miss);
   --font-sans: "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
@@ -66,6 +68,29 @@ body {
 
 .keen-bounce {
   animation: keen-bounce 1.15s ease-in-out infinite;
+}
+
+@keyframes keen-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-6px);
+  }
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+.keen-shake {
+  animation: keen-shake 0.45s ease;
 }
 
 .keen-leave {

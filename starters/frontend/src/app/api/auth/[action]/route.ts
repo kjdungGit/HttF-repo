@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
+import { clearGuestUser, readGuestUser, writeGuestUser } from "@/utils/supabase/guest-session";
 import { createUserFunctions, requireObject, UserRequestError } from "@/utils/supabase/users";
 
 type Context = { params: Promise<{ action: string }> };
@@ -28,19 +29,36 @@ async function handle(request: Request, context: Context) {
         }
       }
     }
-    const users = createUserFunctions(createClient(await cookies()));
+    const jar = await cookies();
+    const users = createUserFunctions(createClient(jar));
     let result;
     if (action === "user") {
       if (request.method === "PATCH") result = await users.updateUser(body);
       else {
-        const user = await users.getCurrentUser();
+        const user = await users.getCurrentUser() ?? readGuestUser(jar);
         if (!user) throw new UserRequestError("AUTH_REQUIRED", 401, "No authenticated user.");
         result = { user };
       }
-    } else if (action === "guest") result = await users.signInWithUsername(body);
-    else if (action === "signup") result = await users.createUser(body);
+    } else if (action === "guest") {
+      try {
+        result = await users.signInWithUsername(body);
+        clearGuestUser(jar);
+      } catch (error) {
+        if (!(error instanceof UserRequestError) || error.code !== "GUEST_SIGNIN_DISABLED") throw error;
+        const username = typeof body.username === "string" ? body.username.trim() : "";
+        result = writeGuestUser(jar, username);
+      }
+    } else if (action === "signup") result = await users.createUser(body);
     else if (action === "login") result = await users.signIn(body);
-    else if (action === "logout") result = await users.signOut();
+    else if (action === "logout") {
+      clearGuestUser(jar);
+      try {
+        result = await users.signOut();
+      } catch (error) {
+        if (!(error instanceof UserRequestError)) throw error;
+        result = { signedOut: true };
+      }
+    }
     else if (action === "reset-password") result = await users.requestPasswordReset(body);
     else if (action === "confirm") result = await users.confirmEmail(body);
     else result = await users.exchangeCode(body);

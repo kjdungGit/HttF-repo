@@ -1,0 +1,46 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 355 >>
+stream
+BT
+/F1 16 Tf
+48 740 Td
+(Form 1098-T  Tuition Statement  2025) Tj
+/F1 10 Tf
+0 -22 Td
+(KEENFinance practice copy. Not an official IRS form. Fill the blanks in the side panel.) Tj
+0 -28 Td
+(1. School name) Tj
+0 -28 Td
+(2. Student name) Tj
+0 -28 Td
+(3. Payments received for qualified tuition \(box 1\)) Tj
+0 -28 Td
+(4. Scholarships or grants \(box 5\)) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000647 00000 n 
+trailer << /Size 6 /Root 1 0 R >>
+startxref
+717
+%%EOF

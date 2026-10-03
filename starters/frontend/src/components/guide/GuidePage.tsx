@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
-import TaxDocumentUpload, { type UploadReview } from "./TaxDocumentUpload";
+import TaxFormGuide from "./TaxFormGuide";
+import { type UploadReview } from "./TaxDocumentUpload";
 import { useTranslation } from "react-i18next";
 import i18n from "@/i18n/client";
 import {
@@ -17,6 +18,7 @@ import {
 } from "./ui";
 import { SpeechControls } from "./SpeechControls";
 import { useSpeech, type SpeechLang } from "./useSpeech";
+import { qualifiedBenefits } from "@/utils/guide/benefits";
 
 type Tri = "" | "yes" | "no" | "unsure";
 type Id =
@@ -39,9 +41,9 @@ type Id =
   | "5d"
   | "6"
   | "6a"
-  | "6b"
   | "6c"
-  | "7";
+  | "7"
+  | "8";
 
 type ChildFact = { dob: string; monthsHome: number };
 
@@ -87,6 +89,7 @@ const MAIN: { id: Id; label: string }[] = [
   { id: "5", label: "5" },
   { id: "6", label: "6" },
   { id: "7", label: "7" },
+  { id: "8", label: "8" },
 ];
 
 const NEXT_MAIN: Record<string, Id | null> = {
@@ -96,7 +99,8 @@ const NEXT_MAIN: Record<string, Id | null> = {
   "4": "5",
   "5": "6",
   "6": "7",
-  "7": null,
+  "7": "8",
+  "8": null,
 };
 
 const PARENT: Partial<Record<Id, Id>> = {
@@ -113,7 +117,6 @@ const PARENT: Partial<Record<Id, Id>> = {
   "5c": "5",
   "5d": "5",
   "6a": "6",
-  "6b": "6",
   "6c": "6",
 };
 
@@ -176,7 +179,7 @@ export default function GuidePage() {
       "3": ["3a", "3b"],
       "4": ["4a", "4b", "4c"],
       "5": ["5a", "5b", "5c", "5d"],
-      "6": ["6a", "6b", "6c"],
+      "6": ["6a", "6c"],
     };
     const list: NavItem[] = [];
     for (const step of MAIN) {
@@ -484,15 +487,7 @@ function Panel({
       <div>
         <h2 className="text-xl font-bold text-ink">{t("steps.1a.h2")}</h2>
         <p className="mt-2 text-sm leading-relaxed text-black/70">{t("steps.1a.p")}</p>
-        <TaxDocumentUpload files={files} setFiles={setFiles} reviews={uploadReviews} setReviews={setUploadReviews} />
-        <ul className="mt-6 space-y-3">
-          {(["w2", "nec", "int", "e", "t", "g", "a", "prior"] as const).map((key) => (
-            <li key={key} className="rounded-lg border border-black/10 bg-white px-4 py-3">
-              <p className="text-sm font-semibold text-orange">{t(`forms.${key}.name`)}</p>
-              <p className="mt-1 text-sm leading-relaxed text-black/70">{t(`forms.${key}.summary`)}</p>
-            </li>
-          ))}
-        </ul>
+        <TaxFormGuide files={files} setFiles={setFiles} reviews={uploadReviews} setReviews={setUploadReviews} />
         <CompleteButton onClick={() => complete("1a")}>{t("steps.1a.done")}</CompleteButton>
       </div>
     );
@@ -1039,18 +1034,12 @@ function Panel({
       <div>
         <h2 className="text-xl font-bold text-ink">{t("steps.6.h2")}</h2>
         <p className="mt-2 text-sm leading-relaxed text-black/70">{t("steps.6.p")}</p>
-        <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
           <ChoiceButton
             title={t("steps.6.selfTitle")}
             detail={t("steps.6.selfDetail")}
             selected={openChild["6"] === "6a"}
             onClick={() => choose("6", "6a")}
-          />
-          <ChoiceButton
-            title={t("steps.6.helpTitle")}
-            detail={t("steps.6.helpDetail")}
-            selected={openChild["6"] === "6b"}
-            onClick={() => choose("6", "6b")}
           />
           <ChoiceButton
             title={t("steps.6.waitTitle")}
@@ -1063,7 +1052,7 @@ function Panel({
     );
   }
 
-  if (id === "6a" || id === "6b" || id === "6c") {
+  if (id === "6a" || id === "6c") {
     return (
       <ChecklistPanel
         id={id}
@@ -1073,6 +1062,10 @@ function Panel({
         complete={complete}
       />
     );
+  }
+
+  if (id === "7") {
+    return <BenefitsPanel answers={answers} openChild={openChild} complete={complete} />;
   }
 
   return <Recap answers={answers} files={files} openChild={openChild} complete={complete} />;
@@ -1162,6 +1155,48 @@ function buildDocs(
   return list;
 }
 
+function BenefitsPanel({
+  answers,
+  openChild,
+  complete,
+}: {
+  answers: Answers;
+  openChild: Partial<Record<Id, Id>>;
+  complete: (id: Id) => void;
+}) {
+  const { t } = useTranslation();
+  const hits = qualifiedBenefits(answers, openChild);
+  return (
+    <div>
+      <h2 className="text-xl font-bold text-ink">{t("steps.7.h2")}</h2>
+      <p className="mt-2 text-sm leading-relaxed text-black/70">{t("steps.7.p")}</p>
+      {hits.length === 0 ? (
+        <p className="mt-5 rounded-lg border border-black/10 bg-white px-4 py-3 text-sm text-black/70">{t("benefits.empty")}</p>
+      ) : (
+        <ul className="mt-5 space-y-3">
+          {hits.map((hit) => (
+            <li key={hit.id} className="flex gap-3 rounded-xl border border-black/10 bg-white p-4">
+              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-check text-white" aria-hidden="true">
+                <CheckIcon />
+              </span>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-orange">{t(`benefits.${hit.id}.jurisdiction`)}</p>
+                <p className="mt-1 font-semibold text-ink">{t(`benefits.${hit.id}.title`)}</p>
+                <p className="mt-1 text-sm leading-relaxed text-black/70">{t(`benefits.${hit.id}.body`)}</p>
+                <p className="mt-2 text-xs font-semibold text-uiuc">
+                  {hit.status === "likely" ? t("benefits.likely") : t("benefits.maybe")}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p className="mt-5 text-xs leading-relaxed text-black/55">{t("benefits.disclaimer")}</p>
+      <CompleteButton onClick={() => complete("7")}>{t("steps.7.done")}</CompleteButton>
+    </div>
+  );
+}
+
 function Recap({
   answers,
   files,
@@ -1193,11 +1228,8 @@ function Recap({
         : openChild["5"] === "5d"
           ? t("recap.messy")
           : t("recap.simple"),
-    openChild["6"] === "6b"
-      ? t("recap.vita")
-      : openChild["6"] === "6c"
-        ? t("recap.wait")
-        : t("recap.self"),
+    openChild["6"] === "6c" ? t("recap.wait") : t("recap.self"),
+    t("recap.benefits"),
   ];
 
   const money = (amount: number) =>
@@ -1212,14 +1244,14 @@ function Recap({
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-ink">{t("steps.7.h2")}</h2>
-      <p className="mt-2 text-sm leading-relaxed text-black/70">{t("steps.7.p")}</p>
+      <h2 className="text-xl font-bold text-ink">{t("steps.8.h2")}</h2>
+      <p className="mt-2 text-sm leading-relaxed text-black/70">{t("steps.8.p")}</p>
       <ol className="mt-5 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-black/80">
         {path.map((line) => (
           <li key={line}>{line}</li>
         ))}
       </ol>
-      <dl className="mt-6 space-y-2 text-sm">
+      <dl className="mt-6 grid grid-cols-2 gap-x-8 text-sm">
         <Row label={t("recap.taxYear")} value={tri(answers.taxYear2025)} />
         <Row label={t("recap.usRes")} value={tri(answers.usResident)} />
         <Row label={t("recap.filed")} value={tri(answers.alreadyFiled)} />
@@ -1229,7 +1261,9 @@ function Recap({
         <Row label={t("recap.blind")} value={tri(answers.blindness)} />
         <Row label={t("recap.could")} value={tri(answers.couldBeClaimed)} />
         <Row label={t("recap.was")} value={tri(answers.wasClaimed)} />
+        <Row label={t("recap.foreign")} value={tri(answers.foreignIncome)} />
         <Row
+          className="col-span-2"
           label={t("recap.people")}
           value={
             answers.hasKids === "yes"
@@ -1248,8 +1282,8 @@ function Recap({
               : tri(answers.hasKids)
           }
         />
-        <Row label={t("recap.foreign")} value={tri(answers.foreignIncome)} />
         <Row
+          className="col-span-2"
           label={t("recap.types")}
           value={
             answers.incomeTypes.length
@@ -1271,21 +1305,22 @@ function Recap({
         <Row label={t("recap.mkt")} value={tri(answers.marketplace)} />
         <Row label={t("recap.tips")} value={tri(answers.tips)} />
         <Row
+          className="col-span-2"
           label={t("recap.files")}
           value={files.length ? files.map((file) => file.name).join(", ") : t("recap.noFiles")}
         />
       </dl>
       <p className="mt-6 text-sm leading-relaxed text-black/70">
-        {t("steps.7.next")}
+        {t("steps.8.next")}
       </p>
-      <CompleteButton onClick={() => complete("7")}>{t("steps.7.done")}</CompleteButton>
+      <CompleteButton onClick={() => complete("8")}>{t("steps.8.done")}</CompleteButton>
     </div>
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
+function Row({ label, value, className = "" }: { label: string; value: string; className?: string }) {
   return (
-    <div className="flex flex-col border-b border-black/10 py-2 sm:flex-row sm:justify-between sm:gap-6">
+    <div className={`flex flex-col border-b border-black/10 py-2 sm:flex-row sm:justify-between sm:gap-4 ${className}`}>
       <dt className="font-medium text-ink">{label}</dt>
       <dd className="text-black/70 sm:text-right">{value}</dd>
     </div>

@@ -145,6 +145,17 @@ export function CheckIcon() {
   );
 }
 
+export function CrossIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M5.3 4 4 5.3 8.7 10 4 14.7 5.3 16 10 11.3 14.7 16 16 14.7 11.3 10 16 5.3 14.7 4 10 8.7z"
+      />
+    </svg>
+  );
+}
+
 export function Term({ word, children }: { word: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   return (

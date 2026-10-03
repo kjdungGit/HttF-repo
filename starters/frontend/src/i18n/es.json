@@ -11,6 +11,30 @@
     "stop": "Detener",
     "unsupported": "La lectura en voz alta no está disponible en este navegador. Pruebe Chrome, Edge o Safari en una computadora con el sonido activado."
   },
+  "account": {
+    "title": "Su cuenta",
+    "choose": "Elija su nombre de usuario",
+    "signin": "Iniciar sesión",
+    "label": "Cuenta",
+    "checking": "Verificando la cuenta",
+    "open": "Abrir la cuenta de {{name}}",
+    "close": "Cerrar la ventana de cuenta",
+    "guest": "Cuenta de invitado de demostración",
+    "signingOut": "Cerrando sesión…",
+    "signout": "Cerrar sesión",
+    "instructions": "Ingrese un nombre de usuario para iniciar la demostración. No necesita correo electrónico ni contraseña.",
+    "username": "Nombre de usuario",
+    "starting": "Iniciando su sesión…",
+    "continue": "Continuar",
+    "sessionNote": "Su cuenta permanece abierta en este navegador. Al cerrar sesión, se creará una cuenta nueva la próxima vez.",
+    "signinUnavailable": "El inicio de sesión con nombre de usuario aún no está habilitado. Active Anonymous Sign-Ins en Supabase para la demostración.",
+    "rateLimited": "Demasiados intentos. Espere un momento e inténtelo de nuevo.",
+    "invalidUsername": "Use un nombre de 2 a 40 letras, números, espacios, puntos, guiones bajos o guiones.",
+    "requestFailed": "No pudimos completar la solicitud. Inténtelo de nuevo.",
+    "unavailable": "El servicio de cuentas no está disponible temporalmente. Inténtelo de nuevo.",
+    "missingUsername": "Ingrese un nombre de usuario.",
+    "signoutFailed": "No pudimos cerrar su sesión. Inténtelo de nuevo."
+  },
   "common": {
     "or": "o",
     "yes": "Sí",
@@ -56,7 +80,7 @@
   ],
   "page": {
     "kicker": "Lista de preparación",
-    "title": "Siete pasos, y luego usted presenta",
+    "title": "Ocho pasos, y luego usted presenta",
     "intro": "Esta es una guía de Champaign / Illinois para el año fiscal 2025, no una declaración presentada. Toque una palabra azul punteada cuando quiera más detalle.",
     "blueWord": "palabra azul",
     "blueHelp": "Esos enlaces abren una explicación breve de la idea tributaria y cómo responder. Ciérrela tocando la palabra otra vez."
@@ -122,9 +146,9 @@
     "5d": "Requiere revisión humana",
     "6": "Lista y cómo presentar",
     "6a": "Presentar usted mismo",
-    "6b": "Ayuda gratuita en persona",
     "6c": "Ya presentó o espera formularios",
-    "7": "Resumen de su preparación"
+    "7": "Beneficios para los que podría calificar",
+    "8": "Resumen de su preparación"
   },
   "income": {
     "wages": "Salarios de un empleo (W-2)",
@@ -148,11 +172,11 @@
     },
     "1a": {
       "h2": "Suba lo que el pagador le envió",
-      "p": "Adjunte solo copias que realmente recibió. Revise los nombres abajo si no está seguro de si necesita un formulario. Nada de esto se envía al IRS.",
+      "p": "Adjunte solo copias que realmente recibió. Pulse el nombre de un formulario para abrir una copia de práctica, llene los espacios uno por uno y termine. Una paloma verde significa que el formulario está completo. Una X roja significa que falta o aún tiene espacios obligatorios. Nada de esto se envía al IRS.",
       "drop": "Suelte archivos aquí o examine",
       "types": "Solo PDF, hasta 8 MB.",
       "done": "Tengo lo que necesito por ahora",
-      "speech": "Paso 1a. Inicie sesión y suba un PDF de un formulario compatible. Revise los números extraídos y seleccione Record forms para guardarlos en su perfil. Los elementos marcados ya están guardados. Nada se envía al IRS."
+      "speech": "Paso 1a. Pulse el nombre de un formulario para abrir un PDF de práctica. Llene los espacios uno por uno. Una paloma verde significa que está completo. Una X roja significa que falta o aún tiene espacios obligatorios."
     },
     "2": {
       "h2": "Fije el año fiscal 2025 e Illinois",
@@ -361,8 +385,6 @@
       "p": "KEENFinance se detiene en un resumen de preparación. Usted aún presenta el 1040 y el IL-1040 (o con un voluntario). Solo un subpaso permanece abierto.",
       "selfTitle": "Lo presentaré yo",
       "selfDetail": "PDF oficiales de 2025, MyTax Illinois, IRS Free File.",
-      "helpTitle": "Quiero un ayudante gratuito",
-      "helpDetail": "Localizador VITA / IRS. Lleve identificación y sus formularios.",
       "waitTitle": "Ya presenté, o espero formularios",
       "waitDetail": "No presente una segunda declaración original.",
       "speech": "Paso 6. Cómo quiere presentar de verdad. KEENFinance se detiene en un resumen de preparación. Usted aún presenta el 1040 y el IL-1040."
@@ -373,56 +395,108 @@
       "done": "Añadir esto a mi resumen",
       "speech": "Paso 6a. Preséntelo usted mismo. Use el Formulario 1040 de 2025 y el IL-1040. Confirme el año impreso."
     },
-    "6b": {
-      "h2": "Ayuda gratuita en persona",
-      "p": "Lleve identificación con foto, formularios del pagador y el AGI del año pasado si lo tiene. Los voluntarios pueden presentar electrónicamente; este sitio no.",
-      "speech": "Paso 6b. Ayuda gratuita en persona. Lleve identificación con foto, formularios del pagador y el AGI del año pasado si lo tiene."
-    },
     "6c": {
       "h2": "Pausa antes de otra declaración",
       "p": "Si ya hay una declaración original de 2025, necesita una enmienda, no un segundo 1040. ¿Aún espera un W-2? Pregunte a nómina antes del Formulario 4852.",
       "speech": "Paso 6c. Pausa antes de otra declaración. Si ya hay una original de 2025, necesita una enmienda, no un segundo 1040."
     },
     "7": {
+      "h2": "Beneficios que este recorrido indica que podría calificar",
+      "p": "Estos son resultados de revisión según sus respuestas: no son un premio, ni un reembolso, ni asesoría fiscal. “Parece elegible” solo significa que las preguntas cubiertas apuntaron en esa dirección. Aquí no se calculan montos.",
+      "done": "Continuar a mi resumen",
+      "speech": "Paso 7. Beneficios para los que podría calificar. Son resultados de revisión según sus respuestas, no un premio ni un reembolso. Aquí no se calculan montos."
+    },
+    "8": {
       "h2": "Lo que armó — no una declaración presentada",
       "p": "Resumen de preparación para el año fiscal 2025. “Parece elegible” solo significa que se respondieron las preguntas que cubrimos. No se muestra un total de reembolso.",
       "done": "Marcar mi resumen como completo",
       "next": "Siguiente acción: lleve esta lista al Formulario 1040 y a MyTax Illinois. Fecha ordinaria de 2025: 15 de abril de 2026.",
-      "speech": "Paso 7. Lo que armó es un resumen de preparación, no una declaración presentada. No se muestra un total de reembolso. Fecha ordinaria de 2025: 15 de abril de 2026."
+      "speech": "Paso 8. Lo que armó es un resumen de preparación, no una declaración presentada. No se muestra un total de reembolso. Fecha ordinaria de 2025: 15 de abril de 2026."
     }
   },
   "forms": {
     "w2": {
       "name": "Formulario W-2",
-      "summary": "Salarios y retenciones. Portal de nómina del empleador; pida un reemplazo si falta."
+      "summary": "Salarios y retenciones. Portal de nómina del empleador; pida un reemplazo si falta.",
+      "fields": {
+        "employeeName": { "label": "Su nombre como aparece en el W-2", "help": "Busque la sección del empleado (casi siempre las casillas c/e a la izquierda). Escriba el nombre exactamente como lo imprimió nómina — nombre, inicial y apellido — aunque use un apodo. Así es como el IRS identifica quién ganó esos salarios." },
+        "employerName": { "label": "Nombre del empleador", "help": "El negocio que le pagó, por lo general en la casilla c. En el campus suele aparecer la universidad, un departamento o una agencia, no el nombre de su supervisor. Si tuvo dos trabajos, necesita un W-2 distinto para cada empleador." },
+        "ein": { "label": "EIN del empleador (casilla b)", "help": "El EIN es el número de identificación fiscal de 9 dígitos del negocio, casi siempre con el formato 12-3456789, en la casilla b junto al nombre del empleador. No es su número de Seguro Social. Si esta copia de práctica está vacía, copie el original o pida un reemplazo a nómina; no invente el número." },
+        "wages": { "label": "Casilla 1 — salarios, propinas y otra compensación", "help": "La casilla 1 es el salario gravable del año, no lo que le depositaron. Copie el monto con centavos (por ejemplo 36000.00). No copie la casilla 3 o 5 aquí; esos salarios del Seguro Social y Medicare pueden ser distintos. Una casilla 1 vacía es información que falta, no un cero automático." },
+        "federalWithheld": { "label": "Casilla 2 — impuesto federal retenido", "help": "La casilla 2 es el impuesto federal que este trabajo ya envió al IRS. Copie el monto impreso. Si no retuvieron nada, ponga 0.00 solo cuando esté seguro de que debe ser cero. No copie el impuesto de Illinois de las casillas 17–19 ni reutilice el número de otro W-2 de muestra." },
+        "ssWages": { "label": "Casilla 3 — salarios del Seguro Social", "help": "La casilla 3 son salarios contados para el impuesto del Seguro Social. A menudo se parece a la casilla 1, pero no siempre. Copie lo impreso. Si su copia está vacía, deje este campo opcional en blanco." },
+        "stateWages": { "label": "Casilla 16 — salarios estatales", "help": "La casilla 16 es el salario que este empleador informó a un estado, por lo general Illinois en un trabajo de Champaign. Copie el monto junto al nombre del estado. Si también trabajó en otro estado, conserve ese W-2 aparte." }
+      }
     },
     "nec": {
       "name": "1099-NEC / 1099-K / 1099-MISC",
-      "summary": "Trabajos extra y plataformas, más sus propias notas de ingresos y gastos."
+      "summary": "Trabajos extra y plataformas, más sus propias notas de ingresos y gastos.",
+      "fields": {
+        "payerName": { "label": "Nombre del pagador o plataforma", "help": "Quién le pagó por trabajo independiente o de plataforma: un cliente, app o mercado, en la casilla del pagador. Use ese nombre legal, no un apodo." },
+        "recipientName": { "label": "Su nombre en el formulario", "help": "Copie su nombre de la sección del destinatario. Debe coincidir con lo que tiene el pagador. Si la copia de práctica está vacía, escriba su nombre legal." },
+        "compensation": { "label": "Compensación a no empleados (casilla 1)", "help": "La casilla 1 del 1099-NEC es el monto bruto que le pagaron, antes de restar gastos. Escriba dólares y centavos. No es ganancia automática. Una casilla 1 vacía no es cero: complete el monto real del formulario original o de sus pagos." },
+        "federalWithheld": { "label": "Impuesto federal retenido", "help": "La casilla 4 es impuesto que el pagador ya envió al IRS. En trabajos extra suele estar vacía. Déjela en blanco si no retuvieron nada, o ponga 0.00 si el formulario muestra cero." },
+        "stateIncome": { "label": "Ingreso estatal informado", "help": "Si el formulario muestra ingreso estatal, cópielo. Si esa área está vacía, deje este campo opcional en blanco. No invente salarios de Illinois a partir de depósitos bancarios." }
+      }
     },
     "int": {
       "name": "1099-INT",
-      "summary": "Intereses bancarios. Descárguelo del portal fiscal del banco."
+      "summary": "Intereses bancarios. Descárguelo del portal fiscal del banco.",
+      "fields": {
+        "payerName": { "label": "Banco o pagador", "help": "El banco, cooperativa o corredor que pagó intereses, en la casilla del pagador. Use el nombre de la institución, no el apodo de la cuenta." },
+        "recipientName": { "label": "Su nombre en la cuenta", "help": "Copie el nombre de la casilla del destinatario. En una cuenta conjunta puede aparecer uno o ambos titulares. Si esta copia dejó el nombre en blanco, escriba el nombre de la cuenta." },
+        "interest": { "label": "Casilla 1 — ingreso por intereses", "help": "La casilla 1 es el interés ordinario acreditado en 2025 (por ejemplo 84.50). Aun montos pequeños pueden ir en la declaración. Copie la cifra. Una casilla 1 vacía es un dato que falta, no un cero silencioso, salvo que confirme que la cuenta no ganó nada." },
+        "federalWithheld": { "label": "Casilla 4 — impuesto federal retenido", "help": "La casilla 4 es retención de respaldo; la mayoría de las cuentas estudiantiles no la tienen. Si está vacía, deje este campo opcional en blanco. Si muestra un monto, cópielo." }
+      }
     },
     "e": {
       "name": "1098-E",
-      "summary": "Interés de préstamo estudiantil. El interés menor de 600 dólares aún puede contar sin este formulario."
+      "summary": "Interés de préstamo estudiantil. El interés menor de 600 dólares aún puede contar sin este formulario.",
+      "fields": {
+        "lenderName": { "label": "Prestamista o administrador", "help": "La compañía que cobró el préstamo estudiantil y envió el 1098-E. Puede ser un administrador, no la escuela ni el prestamista original. Copie el nombre de la casilla del prestamista." },
+        "borrowerName": { "label": "Nombre del prestatario", "help": "El prestatario es el estudiante responsable del préstamo. Un padre que solo ayudó a pagar no debe poner su propio nombre aquí a menos que sea el prestatario en el formulario." },
+        "loanInterest": { "label": "Casilla 1 — interés de préstamo estudiantil recibido", "help": "La casilla 1 es el interés que pagó en 2025, no el saldo del préstamo ni el pago mensual. Copie dólares y centavos. Si pagó interés pero no recibió 1098-E porque fue menos de 600 dólares, igual puede usar el estado del administrador." }
+      }
     },
     "t": {
       "name": "1098-T",
-      "summary": "Colegiatura facturada. Aun así necesita lo que realmente pagó y las becas."
+      "summary": "Colegiatura facturada. Aun así necesita lo que realmente pagó y las becas.",
+      "fields": {
+        "schoolName": { "label": "Nombre de la universidad o escuela", "help": "La escuela que facturó la colegiatura. En Champaign suele ser University of Illinois. Copie el nombre de la institución, no el de una clase." },
+        "studentName": { "label": "Nombre del estudiante", "help": "El estudiante del 1098-T. Si esta es su declaración, debe ser usted." },
+        "tuition": { "label": "Pagos recibidos por colegiatura calificada", "help": "La mayoría de las escuelas informan la casilla 1 (pagos recibidos). Algunas aún informan la 2 (montos facturados). Copie la casilla que su formulario llena. Esto no es automáticamente el crédito educativo." },
+        "grants": { "label": "Becas o subvenciones", "help": "La casilla 5 son becas que administró la escuela. Cópiela aunque crea que la ayuda fue “gratis”. Las becas pueden reducir un crédito educativo." }
+      }
     },
     "g": {
       "name": "1099-G",
-      "summary": "Desempleo del portal de documentos de la agencia estatal."
+      "summary": "Desempleo del portal de documentos de la agencia estatal.",
+      "fields": {
+        "agencyName": { "label": "Pagador (agencia estatal)", "help": "El desempleo lo paga una agencia estatal, no su antiguo empleador. Copie el nombre del pagador del 1099-G." },
+        "recipientName": { "label": "Su nombre", "help": "Copie el nombre de la reclamación de desempleo." },
+        "unemployment": { "label": "Casilla 1 — compensación por desempleo", "help": "La casilla 1 es el desempleo gravable pagado en 2025. Copie el total anual, no un solo depósito semanal. El desempleo suele ser gravable aunque no hayan retenido impuesto." },
+        "federalWithheld": { "label": "Casilla 4 — impuesto federal retenido", "help": "Solo algunas personas eligen retención en el desempleo. Si la casilla 4 está vacía, deje este campo opcional en blanco." }
+      }
     },
     "a": {
       "name": "1095-A",
-      "summary": "Cobertura del Marketplace. Obligatorio si tuvo créditos de prima anticipados."
+      "summary": "Cobertura del Marketplace. Obligatorio si tuvo créditos de prima anticipados.",
+      "fields": {
+        "marketplaceName": { "label": "Nombre del Marketplace", "help": "Healthcare.gov o el mercado estatal que envió el 1095-A. No es el seguro del empleador ni una factura de clínica. Copie el nombre del Marketplace." },
+        "recipientName": { "label": "Nombre del destinatario", "help": "El destinatario es la persona a nombre de la póliza. Copie ese nombre." },
+        "premium": { "label": "Prima mensual de inscripción", "help": "Use la columna de prima del 1095-A. No la mezcle con seguro del empleador ni con una exención de seguro del campus." },
+        "advanceCredit": { "label": "Pago anticipado del crédito de prima", "help": "Lo que el Marketplace ya pagó hacia su prima. El Formulario 8962 lo concilia después. Escriba el monto del formulario. Si falta en una declaración real, puede detener la presentación electrónica." }
+      }
     },
     "prior": {
       "name": "Declaración del año anterior",
-      "summary": "Ayuda a igualar el AGI del año pasado si el programa lo pide. Opcional."
+      "summary": "Ayuda a igualar el AGI del año pasado si el programa lo pide. Opcional.",
+      "fields": {
+        "taxYear": { "label": "Año fiscal de esa declaración", "help": "Mire el año impreso arriba de la página 1. Si prepara 2025, la declaración anterior suele ser 2024." },
+        "filingName": { "label": "Nombre en esa declaración", "help": "Escriba su nombre legal como apareció en ese 1040, casi siempre arriba de la página 1. Un nombre en blanco en el 1040 de práctica significa que el formulario sigue incompleto." },
+        "wagesNoted": { "label": "Salarios anotados en esa declaración (línea 1a)", "help": "Si el 1040 viejo muestra salarios en la línea 1a, cópielos para sus notas. Este campo opcional no reemplaza el W-2 de este año." },
+        "taxableInterest": { "label": "Interés gravable (línea 2b)", "help": "La línea 2b es el interés gravable de los bancos. Copie el monto impreso. En este paquete de práctica el 1040 deja la línea 2b vacía a propósito: escriba el interés de su 1099-INT (por ejemplo 84.50) si está completando el ejercicio." }
+      }
     }
   },
   "docs": {
@@ -465,6 +539,7 @@
     "vita": "Plan de presentación: ayudante VITA / IRS gratuito.",
     "wait": "Plan de presentación: no envíe una segunda declaración original.",
     "self": "Plan de presentación: presentarla usted con formularios oficiales de 2025.",
+    "benefits": "Revisó los créditos y beneficios que coincidieron con sus respuestas.",
     "taxYear": "Año fiscal fijado",
     "usRes": "Residente fiscal de EE. UU. (2025)",
     "filed": "¿Ya presentó?",
@@ -497,5 +572,109 @@
     "files": "Documentos en este navegador",
     "noFiles": "Ninguno subido",
     "notEntered": "No ingresado"
+  },
+  "fill": {
+    "finished": "Ya terminé de llenar este archivo",
+    "requiredError": "Required Fields Not Filled.",
+    "help": "Qué pide esta pregunta",
+    "close": "Cerrar formulario",
+    "question": "Pregunta {{n}} de {{total}}",
+    "back": "Anterior",
+    "next": "Siguiente pregunta",
+    "scrollHint": "Primero revise el formulario. Baje para completar lo que aún esté en blanco.",
+    "answersHeading": "Respuestas que aún faltan en este formulario",
+    "filled": "Completado",
+    "needed": "Obligatorio — aún vacío",
+    "optional": "Opcional",
+    "demoTitle": "Prototype Demo Files",
+    "demoHint": "Estos PDF de práctica ya están en el sitio. Cargue los archivos Complete de uno en uno para ver marcas verdes. Cargue Not Complete de uno en uno para dejar una X roja y luego escriba las respuestas que faltan. Nada se envía al IRS.",
+    "demoDrop": "O suelte aquí un PDF de demostración completo o incompleto",
+    "demoTypes": "Solo PDF. Cargue un archivo a la vez para que los jueces vean el verificador.",
+    "demoMatched": "Se cargó {{name}} como {{form}}.",
+    "demoComplete": "{{name}} completó {{form}}: todas las casillas obligatorias están presentes.",
+    "demoIncomplete": "{{name}} abrió {{form}}: aún faltan casillas obligatorias. Escríbalas en el panel.",
+    "demoUnknown": "No se pudo asociar {{name}} a un formulario de la lista.",
+    "demoLoad": "Cargar en el verificador",
+    "demoCompleteFolder": "Complete",
+    "demoIncompleteFolder": "Not Complete",
+    "statusComplete": "Subido y completo",
+    "statusIncomplete": "Empezado, pero faltan espacios obligatorios",
+    "statusMissing": "Aún no se subió"
+  },
+  "benefits": {
+    "likely": "Parece elegible según sus respuestas",
+    "maybe": "Posible: un ayudante fiscal debe confirmarlo",
+    "empty": "Responda los pasos anteriores para listar créditos coincidentes. Aquí no se otorga nada.",
+    "disclaimer": "KEENFinance no calcula un reembolso. Lleve esta lista a IRS Free File, MyTax Illinois o un sitio VITA.",
+    "std": {
+      "jurisdiction": "Federal",
+      "title": "Deducción estándar",
+      "body": "La mayoría de las declaraciones de estudiantes y primer empleo usan la deducción estándar en lugar de detallar. El monto exacto depende del estado civil de presentación."
+    },
+    "ilExempt": {
+      "jurisdiction": "Illinois",
+      "title": "Exención personal de Illinois",
+      "body": "Illinois parte del ingreso federal y luego aplica sus propias exenciones. Los residentes de todo el año suelen reclamarla en el IL-1040."
+    },
+    "eitc": {
+      "jurisdiction": "Federal",
+      "title": "Crédito por Ingreso del Trabajo (EITC)",
+      "body": "Un crédito reembolsable para quienes trabajaron. Puede calificar con o sin hijos, pero hay pruebas de ingreso y estado civil."
+    },
+    "ilEitc": {
+      "jurisdiction": "Illinois",
+      "title": "Crédito por ingreso del trabajo de Illinois",
+      "body": "Illinois tiene un crédito paralelo al EITC federal. Se reclama en la declaración estatal."
+    },
+    "ctc": {
+      "jurisdiction": "Federal",
+      "title": "Crédito tributario por hijos / otro dependiente",
+      "body": "Posible si tiene un hijo o dependiente calificado. Aún hay que cumplir edad, residencia y sostén en la declaración real."
+    },
+    "care": {
+      "jurisdiction": "Federal",
+      "title": "Crédito por cuidado de hijos y dependientes",
+      "body": "Pagó cuidado para poder trabajar o buscar trabajo. Conserve los datos del proveedor."
+    },
+    "education": {
+      "jurisdiction": "Federal",
+      "title": "Crédito educativo (Oportunidad Americana o Aprendizaje de por Vida)",
+      "body": "La colegiatura y cuotas requeridas pueden calificar. Las becas del 1098-T pueden reducir el crédito."
+    },
+    "loan": {
+      "jurisdiction": "Federal",
+      "title": "Deducción de interés de préstamo estudiantil",
+      "body": "Interés pagado de un préstamo calificado, aunque no haya llegado un 1098-E porque el monto fue menor de 600 dólares."
+    },
+    "saver": {
+      "jurisdiction": "Federal",
+      "title": "Crédito del ahorrador",
+      "body": "Un crédito por aportaciones al retiro. Los estudiantes de tiempo completo a menudo quedan fuera."
+    },
+    "property": {
+      "jurisdiction": "Illinois",
+      "title": "Crédito predial de Illinois",
+      "body": "Los propietarios que pagaron impuesto predial de Illinois en 2025 pueden obtener un crédito. Los inquilinos lo omiten."
+    },
+    "k12": {
+      "jurisdiction": "Illinois",
+      "title": "Crédito por gastos educativos K–12 de Illinois",
+      "body": "Colegiatura, libros o laboratorio K–12 calificados, no útiles escolares ordinarios."
+    },
+    "premium": {
+      "jurisdiction": "Federal",
+      "title": "Crédito de prima (Formulario 8962)",
+      "body": "Obligatorio si tuvo cobertura del Marketplace con créditos anticipados. Necesita el 1095-A."
+    },
+    "tips": {
+      "jurisdiction": "Federal",
+      "title": "Informe de propinas y horas extra",
+      "body": "Las propinas van en la declaración aunque no estén en un W-2."
+    },
+    "review": {
+      "jurisdiction": "Revisión",
+      "title": "Se marcó revisión humana",
+      "body": "Eligió un camino que necesita una persona. Use VITA o un preparador de confianza antes de presentar."
+    }
   }
 }
