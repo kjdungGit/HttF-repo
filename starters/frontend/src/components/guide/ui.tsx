@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
+import "@/i18n/client";
 
 export function ChoiceButton({
   title,
@@ -62,11 +64,12 @@ export function TriState({
   value: "" | "yes" | "no" | "unsure";
   onChange: (value: "yes" | "no" | "unsure") => void;
 }) {
+  const { t } = useTranslation();
   const options = [
-    { id: "yes", text: "Yes" },
-    { id: "no", text: "No" },
-    { id: "unsure", text: "Not sure" },
-  ] as const;
+    { id: "yes" as const, text: t("common.yes") },
+    { id: "no" as const, text: t("common.no") },
+    { id: "unsure" as const, text: t("common.unsure") },
+  ];
   return (
     <fieldset className="rounded-lg border border-black/10 bg-white px-3 py-3">
       <legend className="text-sm font-medium text-ink">{label}</legend>
@@ -181,6 +184,8 @@ export function NumberStepper({
   max?: number;
   prefix?: string;
 }) {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language.startsWith("es") ? "es-ES" : "en-US";
   const [draft, setDraft] = useState(value);
   const [saved, setSaved] = useState(false);
   const shown = draft;
@@ -191,7 +196,7 @@ export function NumberStepper({
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <button
           type="button"
-          aria-label="Decrease"
+          aria-label={t("common.decrease")}
           onClick={() => {
             setSaved(false);
             setDraft((current) => Math.max(0, current - step));
@@ -202,11 +207,11 @@ export function NumberStepper({
         </button>
         <span className="min-w-16 text-center text-xl font-extrabold tabular-nums text-ink">
           {prefix}
-          {shown.toLocaleString("en-US")}
+          {shown.toLocaleString(locale)}
         </span>
         <button
           type="button"
-          aria-label="Increase"
+          aria-label={t("common.increase")}
           onClick={() => {
             setSaved(false);
             setDraft((current) => Math.min(max, current + step));
@@ -223,30 +228,17 @@ export function NumberStepper({
           }}
           className="rounded-full bg-orange px-4 py-2 text-sm font-semibold text-white hover:bg-[#d44222]"
         >
-          Submit
+          {t("common.submit")}
         </button>
       </div>
       {saved ? (
-        <p className="mt-2 text-xs font-semibold text-check">Saved {prefix}{draft.toLocaleString("en-US")}</p>
+        <p className="mt-2 text-xs font-semibold text-check">
+          {t("common.saved", { value: `${prefix}${draft.toLocaleString(locale)}` })}
+        </p>
       ) : null}
     </div>
   );
 }
-
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
 function pad(value: number) {
   return String(value).padStart(2, "0");
@@ -269,6 +261,10 @@ export function DatePicker({
   minYear?: number;
   maxYear?: number;
 }) {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language.startsWith("es") ? "es-ES" : "en-US";
+  const months = t("months", { returnObjects: true }) as string[];
+  const weekdays = t("common.weekdays", { returnObjects: true }) as string[];
   const parsed = value ? new Date(`${value}T12:00:00`) : null;
   const [open, setOpen] = useState(false);
   const [year, setYear] = useState(parsed?.getFullYear() ?? 2000);
@@ -295,8 +291,8 @@ export function DatePicker({
     : 0;
 
   const display = parsed && !Number.isNaN(parsed.getTime())
-    ? parsed.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
-    : "Select year, month, and date";
+    ? parsed.toLocaleDateString(locale, { month: "long", day: "numeric", year: "numeric" })
+    : t("common.selectDate");
 
   return (
     <div className="relative rounded-lg border border-black/10 bg-white px-3 py-3">
@@ -312,13 +308,13 @@ export function DatePicker({
         <div className="absolute left-3 right-3 z-30 mt-2 rounded-xl border border-black/20 bg-white p-3 shadow-[4px_4px_0_0_#0a0a0a]">
           <div className="grid grid-cols-2 gap-2">
             <label className="text-xs font-semibold text-black/60">
-              Month
+              {t("common.month")}
               <select
                 className="mt-1 w-full rounded-md border border-black/20 bg-white px-2 py-1.5 text-sm"
                 value={month}
                 onChange={(event) => setMonth(Number(event.target.value))}
               >
-                {MONTHS.map((name, index) => (
+                {months.map((name, index) => (
                   <option key={name} value={index}>
                     {name}
                   </option>
@@ -326,7 +322,7 @@ export function DatePicker({
               </select>
             </label>
             <label className="text-xs font-semibold text-black/60">
-              Year
+              {t("common.year")}
               <select
                 className="mt-1 w-full rounded-md border border-black/20 bg-white px-2 py-1.5 text-sm"
                 value={year}
@@ -341,7 +337,7 @@ export function DatePicker({
             </label>
           </div>
           <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[11px] font-semibold text-black/45">
-            {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
+            {weekdays.map((day) => (
               <span key={day}>{day}</span>
             ))}
           </div>
