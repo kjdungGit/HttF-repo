@@ -1,7 +1,14 @@
+"use client";
+import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import UserMenu from "@/components/UserMenu";
 
-export default function Header({ kicker = "Champaign · 2025" }: { kicker?: string }) {
+export default function Header({
+  kicker = "Champaign · 2025",
+}: {
+  kicker?: string;
+}) {
+  const { t } = useTranslation();
   return (
     <header className="border-b border-black/80 bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -10,11 +17,13 @@ export default function Header({ kicker = "Champaign · 2025" }: { kicker?: stri
             KEEN<span className="text-orange">Finance</span>
           </span>
           <span className="hidden text-xs uppercase tracking-[0.18em] text-uiuc sm:inline">
-            {kicker}
+            {kicker === "Step-by-step" ? t("header.steps") : kicker}
           </span>
         </Link>
         <div className="flex items-center gap-4">
-          <p className="hidden text-sm text-black/70 md:block">Illinois taxes, explained plainly</p>
+          <p className="hidden text-sm text-black/70 md:block">
+            {t("header.tagline")}
+          </p>
           <UserMenu />
         </div>
       </div>

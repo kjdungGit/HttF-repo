@@ -50,7 +50,7 @@ export async function extractTaxPdf(buffer) {
   try {
     return await Promise.race([timeout, (async () => {
       const pdf = await task.promise;
-      if (pdf.numPages > 10) throw new DocumentError('TOO_MANY_PAGES', 422, 'Upload one tax form at a time, with no more than 10 pages.');
+      if (pdf.numPages > 16) throw new DocumentError('TOO_MANY_PAGES', 422, 'Upload one tax form at a time, with no more than 16 pages.');
       const pages = [];
       for (let number = 1; number <= pdf.numPages; number++) {
         const page = await pdf.getPage(number);

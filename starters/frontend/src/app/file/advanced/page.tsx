@@ -1,11 +1,11 @@
 import Header from "@/components/Header";
-import GuidedPreparation from "@/components/guide/GuidedPreparation";
+import GuidePage from "@/components/guide/GuidePage";
 
 export default function FilePage() {
   return (
     <>
       <Header kicker="Step-by-step" />
-      <GuidedPreparation />
+      <GuidePage />
     </>
   );
 }

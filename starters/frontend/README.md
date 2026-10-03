@@ -2,7 +2,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+Install packages with `npm ci`. If `.env.local` does not exist, copy `.env.example` to `.env.local`. The tracked `.env.local` contains the shared demo project URL and public publishable key. These values are intentionally included for collaborators.
+
+Client Components can use `createClient()` from `@/utils/supabase/client`. Backend helpers use the same public configuration and the caller's authenticated session. Supabase Row Level Security determines what each user can read or write; the public key does not grant access to other users' records. Apply the migrations and enable Anonymous Sign-Ins for the username demo (see [overhaul setup](../../OVERHAUL.md)).
+
+Keep any administration key in ignored `.env.development.local` or `.env.production.local`, without a `NEXT_PUBLIC_` prefix. It is not used by the browser client. Restart development or rebuild after changing public environment variables.
+
+Run the development server:
 
 ```bash
 npm run dev

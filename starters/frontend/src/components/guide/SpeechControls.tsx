@@ -23,7 +23,7 @@ export function SpeechControls({
 }) {
   const active = speakingId === stepId;
   const btn =
-    "rounded-full border border-black/20 bg-white px-2.5 py-1 text-[11px] font-semibold text-ink hover:border-orange disabled:cursor-not-allowed disabled:opacity-40";
+    "rounded-full border border-black/20 bg-white min-h-11 px-3 py-2 text-sm font-semibold text-ink hover:border-orange disabled:cursor-not-allowed disabled:opacity-40";
 
   if (!supported) {
     return (

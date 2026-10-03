@@ -12,6 +12,7 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "public/pdfjs/**", // Generated third-party worker, copied from the installed dependency.
   ]),
 ]);
 
