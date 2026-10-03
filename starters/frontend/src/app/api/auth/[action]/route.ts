@@ -6,7 +6,7 @@ import { createUserFunctions, requireObject, UserRequestError } from "@/utils/su
 type Context = { params: Promise<{ action: string }> };
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-const postActions = ["signup", "login", "logout", "reset-password", "confirm", "exchange-code"];
+const postActions = ["guest", "signup", "login", "logout", "reset-password", "confirm", "exchange-code"];
 
 async function handle(request: Request, context: Context) {
   const headers = { "Cache-Control": "private, no-store" };
@@ -37,7 +37,8 @@ async function handle(request: Request, context: Context) {
         if (!user) throw new UserRequestError("AUTH_REQUIRED", 401, "No authenticated user.");
         result = { user };
       }
-    } else if (action === "signup") result = await users.createUser(body);
+    } else if (action === "guest") result = await users.signInWithUsername(body);
+    else if (action === "signup") result = await users.createUser(body);
     else if (action === "login") result = await users.signIn(body);
     else if (action === "logout") result = await users.signOut();
     else if (action === "reset-password") result = await users.requestPasswordReset(body);

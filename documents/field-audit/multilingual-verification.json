@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "sharedRules": "Identical normalization and bounds checks for both languages; document-specific boxes",
+  "languages": {
+    "English": {
+      "documents": 28,
+      "entryFields": 1584,
+      "normalizedBoxesVerified": 1584
+    },
+    "Spanish": {
+      "documents": 11,
+      "entryFields": 505,
+      "normalizedBoxesVerified": 505
+    }
+  },
+  "englishSpanish1040": {
+    "commonFieldNames": 134,
+    "differentRectangles": 129
+  },
+  "unknownTemplatesRejected": true
+}

@@ -36,6 +36,9 @@ function password(value: unknown, creating = false) {
 
 function authError(error: { code?: string; status?: number } | null) {
   if (!error) return;
+  if (error.code === "anonymous_provider_disabled") {
+    throw new UserRequestError("GUEST_SIGNIN_DISABLED", 503, "Username sign-in is not enabled yet.");
+  }
   const limited = error.status === 429;
   const badCredentials = ["invalid_credentials", "email_not_confirmed", "session_not_found", "refresh_token_not_found"].includes(error.code ?? "");
   throw new UserRequestError(limited ? "RATE_LIMITED" : badCredentials ? "AUTH_FAILED" : "AUTH_REQUEST_FAILED",
@@ -45,7 +48,7 @@ function authError(error: { code?: string; status?: number } | null) {
 
 function publicUser(user: User | null) {
   if (!user) return null;
-  return { id: user.id, email: user.email, emailConfirmed: Boolean(user.email_confirmed_at),
+  return { id: user.id, email: user.email, emailConfirmed: Boolean(user.email_confirmed_at), isGuest: Boolean(user.is_anonymous),
     displayName: typeof user.user_metadata?.display_name === "string" ? user.user_metadata.display_name : null };
 }
 
@@ -59,6 +62,20 @@ export function createUserFunctions(client: SupabaseClient) {
   }
 
   return {
+    async signInWithUsername(input: Record<string, unknown>) {
+      requireObject(input);
+      const username = text(input.username, "username", 40).trim();
+      if (!/^[\p{L}\p{N}][\p{L}\p{N}_. -]{1,39}$/u.test(username)) {
+        throw new UserRequestError("INVALID_INPUT", 400, "Use 2–40 letters, numbers, spaces, dots, underscores, or hyphens.");
+      }
+      // A username labels a guest; it never authenticates an existing account.
+      const existingUser = await getCurrentUser();
+      if (existingUser) return { user: existingUser };
+      const { data, error } = await client.auth.signInAnonymously({ options: { data: { username, display_name: username } } });
+      authError(error);
+      if (!data.user || !data.session) throw new UserRequestError("AUTH_REQUEST_FAILED", 503, "Unable to start a guest session.");
+      return { user: publicUser(data.user) };
+    },
     async createUser(input: Record<string, unknown>) {
       requireObject(input);
       const metadata = input.displayName === undefined ? {} : { display_name: text(input.displayName, "display name", 100).trim() };

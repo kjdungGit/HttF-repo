@@ -1,6 +1,6 @@
 # Server-side Supabase table functions and API
 
-Next.js hosts these Node/server functions. The shared header now includes an account avatar and sign-in/create-account dialogs. They call the server auth APIs; no browser Supabase SDK helper is included. Session refresh runs only for `/api/*`.
+Next.js hosts these Node/server functions. The shared header now includes an account avatar and username-only sign-in dialog. They call the server auth APIs; no browser Supabase SDK helper is included. Session refresh runs only for `/api/*`.
 
 ## Registered tables
 
@@ -58,10 +58,11 @@ Run `npm test`, `npm run lint`, `npx --no-install tsc --noEmit`, and `npm run bu
 
 ## User/account helpers
 
-`src/utils/supabase/users.ts` exports `createUserFunctions(supabase)` with `createUser`, `signIn`, `signOut`, `getCurrentUser`, `requestPasswordReset`, `updateUser`, `confirmEmail`, and `exchangeCode`. Use a request-scoped server client so Supabase can persist sessions to SSR cookies.
+`src/utils/supabase/users.ts` exports `createUserFunctions(supabase)` with `signInWithUsername`, `createUser`, `signIn`, `signOut`, `getCurrentUser`, `requestPasswordReset`, `updateUser`, `confirmEmail`, and `exchangeCode`. Use a request-scoped server client so Supabase can persist sessions to SSR cookies.
 
 | Endpoint | Method | JSON body |
 | --- | --- | --- |
+| `/api/auth/guest` | POST | `{ "username": "Demo User" }`; creates a Supabase anonymous session |
 | `/api/auth/signup` | POST | `{ "email": "...", "password": "...", "displayName": "optional" }` |
 | `/api/auth/login` | POST | `{ "email": "...", "password": "..." }` |
 | `/api/auth/logout` | POST | None; signs out current session |
@@ -71,7 +72,7 @@ Run `npm test`, `npm run lint`, `npx --no-install tsc --noEmit`, and `npm run bu
 | `/api/auth/confirm` | POST | `{ "tokenHash": "...", "type": "signup" }`; also accepts `email`, `recovery`, `email_change` |
 | `/api/auth/exchange-code` | POST | `{ "code": "..." }`; consumes a PKCE code with its cookie verifier |
 
-Successful signup returns HTTP 201 with limited user fields and `confirmationRequired`. Confirmation settings are controlled by Supabase; signup does not bypass them. API bodies never return access/refresh tokens. New passwords require at least 8 characters; provider requirements also apply. Reset requests return a generic eligibility message. Configure allowed site/redirect URLs and email templates in Supabase; a backend caller must submit the callback token/code to the corresponding helper endpoint. The shared header uses these endpoints for sign-in, account creation, current-user lookup, and logout. Email-confirmation responses display a check-your-email state and require confirmation before sign-in; no authenticated state is fabricated.
+Successful signup returns HTTP 201 with limited user fields and `confirmationRequired`. Confirmation settings are controlled by Supabase; signup does not bypass them. API bodies never return access/refresh tokens. New passwords require at least 8 characters; provider requirements also apply. Reset requests return a generic eligibility message. Configure allowed site/redirect URLs and email templates in Supabase; a backend caller must submit the callback token/code to the corresponding helper endpoint. These email endpoints are retained for backend compatibility. The header uses the username-only guest endpoint instead.
 
 Current-user lookup validates against `auth.getUser()`. Account updates cannot assign roles or arbitrary metadata. These helpers use Supabase Auth's `auth.users`; they do not automatically insert a row into `public.profiles` or any other application table. Provisioning profiles depends on your verified table schema or existing database triggers. No admin-user management or service-role key is required for these self-service helpers.
 
@@ -80,6 +81,16 @@ User-helper tests cover validation before SDK calls, pending confirmation, token
 
 ## Header account display
 
-`src/components/UserMenu.tsx` checks `/api/auth/user` when mounted. Anonymous users see a gray avatar and sign-in button; authenticated users see a colored avatar and their saved display name (or email prefix). Native modal dialogs provide sign-in, create-account switching, confirmation feedback, account details, and logout, with keyboard focus and Escape handling. Signup sends `displayName`, email, and password to the backend, which persists the user and name metadata in `auth.users`. It does not guess or mutate `public.profiles` columns.
+The header uses only username sign-in: `POST /api/auth/guest`, verified current-user lookup, and logout. Enable Anonymous Sign-Ins in Supabase Authentication before the live demo. A username labels a new anonymous Auth user; it cannot recover an account on another browser. The existing browser cookie restores the account. Signing out and signing in again creates a different account, even with the same username.
 
-Browser smoke checks passed for the actual anonymous endpoint and for signup/confirmation, failed/successful login, reload, and logout with controlled API responses. The mobile modal was checked at 375px width. These checks did not create another live account or send confirmation email. Backend tests remain 22 passing checks.
+The popup contains one username input. Signed-out visitors see a gray avatar; signed-in guests see a colored avatar and their name. Legacy email/password endpoints above remain available for backend compatibility; the popup does not call them.
+
+User metadata is saved in `auth.users`. The supplied schema includes an Auth insert trigger that creates `profiles(id)` automatically. Its live deployment has not been independently verified. Keep the profile trigger for guest accounts too: the other tables reference profiles.
+
+Verification: 25 backend tests pass, including simulated username creation, verified restoration, logout, fresh-account creation, input validation, and disabled-provider errors. See DATABASE_REVIEW.md for live-read limitations and schema recommendations.
+
+Browser verification passed on localhost: the live username request returned the expected GUEST_SIGNIN_DISABLED error. Controlled API responses verified account creation, header name/color, reload restoration, logout, fresh creation, and the mobile popup. This does not verify live account creation or profile writes.
+
+## PDF upload and recording
+
+The upload widget now calls `/api/documents/upload` for verified-template PDF extraction and `/api/documents/save` when **Record forms** is clicked. See [PDF_UPLOAD.md](PDF_UPLOAD.md) for canonical bilingual keys, supported layouts, profile migration order, and validation. The recorded JSON is appended through an ownership-scoped RPC; it does not overwrite existing form arrays. Live saving requires both Supabase migrations and a signed-in user's profile.

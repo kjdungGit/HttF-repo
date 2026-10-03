@@ -2,6 +2,8 @@
 
 import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 
+import TaxDocumentUpload, { type UploadReview } from "./guide/TaxDocumentUpload";
+
 type TabId = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "bank" | "docs";
 
 type NavItem = {
@@ -54,6 +56,7 @@ export default function LandingPage() {
   const [showDocs, setShowDocs] = useState(false);
   const [skipped, setSkipped] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
+  const [uploadReviews, setUploadReviews] = useState<UploadReview[]>([]);
   const [bank, setBank] = useState({
     holder: "",
     institution: "",
@@ -151,7 +154,7 @@ export default function LandingPage() {
                         <BankingPanel bank={bank} setBank={setBank} />
                       ) : null}
                       {item.id === "docs" ? (
-                        <DocumentsPanel files={files} setFiles={setFiles} />
+                        <DocumentsPanel files={files} setFiles={setFiles} reviews={uploadReviews} setReviews={setUploadReviews} />
                       ) : null}
                       {item.id !== "1" &&
                       item.id !== "bank" &&
@@ -343,47 +346,23 @@ function Field({
 function DocumentsPanel({
   files,
   setFiles,
+  reviews,
+  setReviews,
 }: {
   files: File[];
   setFiles: Dispatch<SetStateAction<File[]>>;
+  reviews: UploadReview[];
+  setReviews: Dispatch<SetStateAction<UploadReview[]>>;
 }) {
   return (
     <div>
       <h2 className="text-xl font-bold text-navy">Upload tax documents</h2>
       <p className="mt-2 max-w-2xl text-sm leading-relaxed text-navy/70">
-        Add PDFs or photos of the forms you received this year. Below is what
+        Add PDFs of the forms you received this year. Below is what
         each common file is and why it matters on a return.
       </p>
 
-      <label className="mt-5 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-uiuc/40 bg-white px-4 py-8 text-center hover:border-orange">
-        <span className="font-semibold text-navy">Drop files here or browse</span>
-        <span className="mt-1 text-xs text-navy/60">
-          PDF, JPG, or PNG. You can add more than one.
-        </span>
-        <input
-          className="sr-only"
-          type="file"
-          multiple
-          accept=".pdf,.png,.jpg,.jpeg"
-          onChange={(event) => {
-            const next = event.target.files ? Array.from(event.target.files) : [];
-            setFiles((prev) => [...prev, ...next]);
-          }}
-        />
-      </label>
-
-      {files.length > 0 ? (
-        <ul className="mt-4 space-y-1 text-sm text-navy">
-          {files.map((file) => (
-            <li key={`${file.name}-${file.lastModified}`}>
-              {file.name}{" "}
-              <span className="text-navy/50">
-                ({Math.max(1, Math.round(file.size / 1024))} KB)
-              </span>
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <TaxDocumentUpload files={files} setFiles={setFiles} reviews={reviews} setReviews={setReviews} />
 
       <ul className="mt-6 space-y-3">
         {TAX_FILES.map((doc) => (

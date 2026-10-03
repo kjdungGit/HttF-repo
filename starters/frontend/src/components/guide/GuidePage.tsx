@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
+import TaxDocumentUpload, { type UploadReview } from "./TaxDocumentUpload";
 import {
   Card,
   CheckIcon,
@@ -158,6 +159,7 @@ export default function GuidePage() {
   const [openChild, setOpenChild] = useState<Partial<Record<Id, Id>>>({});
   const [done, setDone] = useState<Set<Id>>(new Set());
   const [files, setFiles] = useState<File[]>([]);
+  const [uploadReviews, setUploadReviews] = useState<UploadReview[]>([]);
   const [answers, setAnswers] = useState<Answers>(EMPTY);
 
   const items = useMemo<NavItem[]>(() => {
@@ -319,6 +321,8 @@ export default function GuidePage() {
                         openChild={openChild}
                         set={set}
                         setFiles={setFiles}
+                        uploadReviews={uploadReviews}
+                        setUploadReviews={setUploadReviews}
                         choose={choose}
                         complete={complete}
                         skipStepOne={skipStepOne}
@@ -349,6 +353,8 @@ function Panel({
   openChild,
   set,
   setFiles,
+  uploadReviews,
+  setUploadReviews,
   choose,
   complete,
   skipStepOne,
@@ -362,6 +368,8 @@ function Panel({
   openChild: Partial<Record<Id, Id>>;
   set: <K extends keyof Answers>(key: K, value: Answers[K]) => void;
   setFiles: (next: File[] | ((prev: File[]) => File[])) => void;
+  uploadReviews: UploadReview[];
+  setUploadReviews: Dispatch<SetStateAction<UploadReview[]>>;
   choose: (parent: Id, child: Id) => void;
   complete: (id: Id) => void;
   skipStepOne: () => void;
@@ -388,7 +396,7 @@ function Panel({
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
           <ChoiceButton
             title="Upload documents"
-            detail="Opens 1a. PDFs or photos stay in this browser tab."
+            detail="Opens 1a. Upload a PDF, review its values, then save to your profile."
             selected={openChild["1"] === "1a"}
             onClick={() => choose("1", "1a")}
           />
@@ -410,32 +418,7 @@ function Panel({
           Only attach copies you actually received. Skim the names below if you
           are not sure whether you need a form. Nothing here is sent to the IRS.
         </p>
-        <label className="mt-5 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-black/30 bg-white px-4 py-8 text-center hover:border-orange">
-          <span className="font-semibold text-ink">Drop files here or browse</span>
-          <span className="mt-1 text-xs text-black/60">PDF, JPG, or PNG.</span>
-          <input
-            className="sr-only"
-            type="file"
-            multiple
-            accept=".pdf,.png,.jpg,.jpeg"
-            onChange={(event) => {
-              const next = event.target.files ? Array.from(event.target.files) : [];
-              setFiles((prev) => [...prev, ...next]);
-            }}
-          />
-        </label>
-        {files.length > 0 ? (
-          <ul className="mt-4 space-y-1 text-sm text-ink">
-            {files.map((file) => (
-              <li key={`${file.name}-${file.lastModified}`}>
-                {file.name}{" "}
-                <span className="text-black/50">
-                  ({Math.max(1, Math.round(file.size / 1024))} KB)
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <TaxDocumentUpload files={files} setFiles={setFiles} reviews={uploadReviews} setReviews={setUploadReviews} />
         <ul className="mt-6 space-y-3">
           {[
             ["Form W-2", "Job wages and withholding. Employer/payroll portal; request a replacement if missing."],

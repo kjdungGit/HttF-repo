@@ -72,3 +72,46 @@ test('rate-limit errors do not expose provider messages', async () => {
   const { users } = fixture({ signUp: { data: {}, error: { status: 429, message: 'sensitive provider details' } } });
   await assert.rejects(users.createUser({ email: 'fixture@example.com', password: 'ValidPassword123!' }), (error) => error.status === 429 && !error.message.includes('sensitive'));
 });
+
+test('username account creation, session restoration, logout, and fresh account follow the guest pathway', async () => {
+  let current = null;
+  let created = 0;
+  const calls = [];
+  const users = createUserFunctions({ auth: {
+    getUser: async () => { calls.push('getUser'); return { data: { user: current }, error: current ? null : { name: 'AuthSessionMissingError' } }; },
+    signInAnonymously: async (input) => {
+      calls.push('signInAnonymously');
+      assert.deepEqual(Object.keys(input.options.data).sort(), ['display_name', 'username']);
+      current = { id: `guest-${++created}`, is_anonymous: true, user_metadata: input.options.data };
+      return { data: { user: current, session: { access_token: 'private-token' } }, error: null };
+    },
+    signOut: async () => { calls.push('signOut'); current = null; return { error: null }; },
+  } });
+  const result = await users.signInWithUsername({ username: ' Demo User ' });
+  assert.equal(result.user.displayName, 'Demo User');
+  assert.equal(result.user.isGuest, true);
+  assert.doesNotMatch(JSON.stringify(result), /private-token|access_token|password/);
+  assert.equal((await users.getCurrentUser()).id, result.user.id);
+  assert.equal((await users.signInWithUsername({ username: 'Another name' })).user.id, result.user.id);
+  assert.equal(created, 1);
+  await users.signOut();
+  assert.equal(await users.getCurrentUser(), null);
+  assert.notEqual((await users.signInWithUsername({ username: 'Demo User' })).user.id, result.user.id);
+  assert.deepEqual(calls.slice(0, 2), ['getUser', 'signInAnonymously']);
+});
+
+test('invalid usernames never contact the authentication provider', async () => {
+  const { users, calls } = fixture();
+  for (const username of ['', 'a', '<script>', 'x'.repeat(41)]) {
+    await assert.rejects(users.signInWithUsername({ username }), error => error.status === 400);
+  }
+  assert.equal(calls.length, 0);
+});
+
+test('disabled anonymous sign-in reports the actionable demo configuration error', async () => {
+  const users = createUserFunctions({ auth: {
+    getUser: async () => ({ data: { user: null }, error: { name: 'AuthSessionMissingError' } }),
+    signInAnonymously: async () => ({ data: {}, error: { code: 'anonymous_provider_disabled', status: 422 } }),
+  } });
+  await assert.rejects(users.signInWithUsername({ username: 'Demo User' }), error => error.code === 'GUEST_SIGNIN_DISABLED' && error.status === 503);
+});
