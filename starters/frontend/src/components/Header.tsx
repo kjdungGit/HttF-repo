@@ -1,7 +1,6 @@
 "use client";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
-import UserMenu from "@/components/UserMenu";
 
 export default function Header({
   kicker = "Champaign · 2025",
@@ -24,7 +23,6 @@ export default function Header({
           <p className="hidden text-sm text-black/70 md:block">
             {t("header.tagline")}
           </p>
-          <UserMenu />
         </div>
       </div>
       <div className="h-1 bg-gradient-to-r from-black via-uiuc to-orange" />

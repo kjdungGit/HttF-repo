@@ -2,8 +2,7 @@
 import { useTranslation } from "react-i18next";
 import { SpeechControls } from "./SpeechControls";
 import { useSpeech } from "./useSpeech";
-export const progressKey = (id: string | null) =>
-  `keenfinance:preparation:v1:${id ?? "device"}`;
+export const progressKey = () => "keenfinance:preparation:v1:device";
 export function download(
   name: string,
   data: string,

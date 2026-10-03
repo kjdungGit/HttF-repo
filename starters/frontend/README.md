@@ -1,42 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KEENFinance client application
 
-## Getting Started
+A React/Next.js and Tailwind tax-preparation demo. There is no sign-in, database, environment key, or application backend. Questions, PDF review, recorded forms, language selection, and progress run in the browser.
 
-Install packages with `npm ci`. If `.env.local` does not exist, copy `.env.example` to `.env.local`. The tracked `.env.local` contains the shared demo project URL and public publishable key. These values are intentionally included for collaborators.
+From this directory:
 
-Client Components can use `createClient()` from `@/utils/supabase/client`. Backend helpers use the same public configuration and the caller's authenticated session. Supabase Row Level Security determines what each user can read or write; the public key does not grant access to other users' records. Apply the migrations and enable Anonymous Sign-Ins for the username demo (see [overhaul setup](../../OVERHAUL.md)).
-
-Keep any administration key in ignored `.env.development.local` or `.env.production.local`, without a `NEXT_PUBLIC_` prefix. It is not used by the browser client. Restart development or rebuild after changing public environment variables.
-
-Run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```sh
+npm ci
+npm run dev -- --hostname 0.0.0.0 --port 3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run `npm test`, `npm run lint`, and `npm run build` to verify changes. `npm run build` exports the complete static site to `out/`. Deploy that directory on any static host; no Next.js or Supabase server is needed in production. To preview the export with a static-file server locally, run `npm start`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/`: English/Spanish introduction, narration, and progress-backup restoration.
+- `/file/`: life-event questions, W-2 review, and a personalized preparation checklist.
+- `/file/advanced/`: the detailed guide and multi-form PDF review widget.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+PDFs are read locally using PDF.js and the reviewed form registry. The build/development scripts copy the worker, fonts, and WASM assets from the installed package into ignored `public/pdfjs/`; no external PDF service is used. Unsupported layouts and scans use manual entry.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Progress is stored under `keenfinance:preparation:v1:device` and reviewed forms under `keenfinance:forms:v1` in localStorage. Clearing browser data removes these copies. Progress backups and recorded-form backups can be downloaded and restored in another browser. Original PDFs and identity fields such as SSNs are not saved. Browser storage failure is reported and must not be treated as a successful save.

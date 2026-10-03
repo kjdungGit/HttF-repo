@@ -30,7 +30,11 @@ export default function PdfEvidencePreview({
         pdfjs.GlobalWorkerOptions.workerSrc = "/pdfjs/pdf.worker.min.mjs";
         const data = new Uint8Array(await file.arrayBuffer());
         if (cancelled) return;
-        task = pdfjs.getDocument({ data });
+        task = pdfjs.getDocument({
+          data,
+          standardFontDataUrl: "/pdfjs/standard_fonts/",
+          wasmUrl: "/pdfjs/wasm/",
+        });
         const pdf = await task.promise;
         const page = await pdf.getPage(Math.min(pageNumber, pdf.numPages));
         if (cancelled || !canvas.current) return;

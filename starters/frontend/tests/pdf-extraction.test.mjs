@@ -1,8 +1,9 @@
+import {extractTaxPdf} from './pdf-engine.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import { test } from 'node:test';
-import { confirmedRecord, decimalValue, extractTaxPdf, templates } from '../src/utils/pdf/tax-extraction.mjs';
+import { confirmedRecord, decimalValue, templates } from '../src/utils/pdf/tax-extraction.mjs';
 const fixture = name => readFileSync(new URL(`./fixtures/pdf/${name}`, import.meta.url));
 
 test('filled English and Spanish 1040 produce identical keys despite a line moving to a different page', async () => {
@@ -41,10 +42,10 @@ test('currency parsing preserves zero and rejects ambiguous separators and text'
   for (const value of ['', '1.234,50', '12,34', 'about 300', '1e6']) assert.equal(decimalValue(value), null);
 });
 
-test('confirmed records accept only mapped keys and preserve selected profile column', () => {
+test('confirmed records accept only mapped keys and preserve form identity', () => {
   const input = { confirmed: true, recordId: randomUUID(), templateId: 'f1040sp--2025', fields: { wages: '42000', total_federal_withholding: '4500.50', amount_owed: null } };
   const result = confirmedRecord(input);
-  assert.equal(result.column, 'form_1040');
+  assert.equal(result.record.form_type, '1040');
   assert.equal(result.record.language, 'es');
   assert.equal(result.record.fields.wages, '42000.00');
   assert.equal(result.record.id, input.recordId);

@@ -15,6 +15,11 @@ import {
   type Preparation,
   type W2Key,
 } from "@/utils/preparation/model.mjs";
+import { extractTaxPdf } from "@/utils/pdf/tax-extraction.mjs";
+import {
+  readLocalForms,
+  recordLocalForm,
+} from "@/utils/preparation/local-forms.mjs";
 import type { Extraction } from "@/utils/pdf/tax-extraction.mjs";
 import {
   PreparationControls,
@@ -28,7 +33,6 @@ export default function GuidedPreparation() {
   const { t, i18n } = useTranslation();
   const tr = (key: string) => t(`overhaul.${key}`);
   const [state, setState] = useState<Preparation>(blankPreparation);
-  const [userId, setUserId] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [message, setMessage] = useState("");
   const [storageBlocked, setStorageBlocked] = useState(false);
@@ -38,150 +42,76 @@ export default function GuidedPreparation() {
   const [selected, setSelected] = useState<W2Key>("box_1_wages");
   const [recorded, setRecorded] = useState(false);
   const generation = useRef(0);
-  const account = useRef<{ id: string | null; loaded: boolean }>({
-    id: null,
-    loaded: false,
-  });
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
-    let disposed = false;
-    const counter = generation;
-    async function load(id: string | null, adoptDevice = false) {
-      const run = ++generation.current;
-      setLoaded(false);
-      setFile(null);
-      setExtraction(null);
-      setRecorded(false);
-      setMessage("");
-      setBusy(false);
+    const timer = window.setTimeout(() => {
       let draft = blankPreparation();
-      let hasLocal = false;
       let isRecorded = false;
       try {
-        const saved =
-          localStorage.getItem(progressKey(id)) ??
-          (adoptDevice ? localStorage.getItem(progressKey(null)) : null);
-        if (saved) {
-          draft = validatePreparation(JSON.parse(saved));
-          hasLocal = true;
+        const saved = localStorage.getItem(progressKey());
+        if (saved) draft = validatePreparation(JSON.parse(saved));
+      } catch {
+        setStorageBlocked(true);
+      }
+      try {
+        const forms = readLocalForms();
+        isRecorded = forms.some((f) => f.id === draft.w2.recordId);
+        const saved = forms.findLast(
+          (f) => f.form_type === "w2" && f.tax_year === 2025,
+        );
+        if (saved && W2_FIELDS.every((k) => draft.w2.fields[k] === null)) {
+          const fields = { ...draft.w2.fields };
+          for (const key of W2_FIELDS) {
+            const value = saved.fields[key];
+            if (value && /^\d{1,12}(?:\.\d{0,2})?$/.test(value))
+              fields[key] = value;
+          }
+          draft = {
+            ...draft,
+            documentStatus: "received",
+            w2: {
+              ...draft.w2,
+              employer: saved.issuer ?? "",
+              fields,
+              confirmed: Object.values(fields).some((value) => value !== null),
+              recordId: saved.id,
+              source: saved.source,
+            },
+          };
+          isRecorded = true;
         }
       } catch {
         setStorageBlocked(true);
       }
-      if (id) {
-        try {
-          const response = await fetch("/api/preparation", {
-            cache: "no-store",
-          });
-          const data = await response.json();
-          if (!response.ok || data.userId !== id) throw Error();
-          if (data.preparation) {
-            const online = validatePreparation(data.preparation);
-            if (
-              !hasLocal ||
-              Date.parse(online.updatedAt) > Date.parse(draft.updatedAt)
-            )
-              draft = online;
-          }
-        } catch {
-          if (!disposed && run === generation.current)
-            setMessage("progressError");
-        }
-        try {
-          const response = await fetch("/api/documents", { cache: "no-store" });
-          const data = await response.json();
-          if (response.ok && data.userId === id) {
-            const forms = data.forms ?? [];
-            isRecorded = forms.some(
-              (f: { id: string }) => f.id === draft.w2.recordId,
-            );
-            const saved = forms.findLast(
-              (f: { formType: string; taxYear: number }) =>
-                f.formType === "w2" && f.taxYear === 2025,
-            );
-            if (saved && W2_FIELDS.every((k) => draft.w2.fields[k] === null)) {
-              const fields = { ...draft.w2.fields };
-              for (const k of W2_FIELDS) {
-                const v = saved.fields?.[k];
-                if (
-                  v !== null &&
-                  v !== undefined &&
-                  /^\d{1,12}(?:\.\d{0,2})?$/.test(String(v))
-                )
-                  fields[k] = String(v);
-              }
-              if (Object.values(fields).some((v) => v !== null)) {
-                const uuid =
-                  /^[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/i.test(
-                    saved.id,
-                  )
-                    ? saved.id
-                    : null;
-                draft = {
-                  ...draft,
-                  documentStatus: "received",
-                  w2: { ...draft.w2, fields, confirmed: true, recordId: uuid },
-                };
-                isRecorded = true;
-              }
-            }
-          }
-        } catch {
-          /* Saved-form loading does not block local preparation. */
-        }
-      }
-      if (disposed || run !== generation.current) return;
       try {
-        const restore = sessionStorage.getItem("keenfinance:restore");
-        if (restore) {
-          draft = validatePreparation(JSON.parse(restore));
+        const restored = sessionStorage.getItem("keenfinance:restore");
+        if (restored) {
+          draft = validatePreparation(JSON.parse(restored));
           sessionStorage.removeItem("keenfinance:restore");
           isRecorded = false;
         }
       } catch {
-        /* Keep validated progress if storage is blocked. */
+        /* Browser draft remains available when session storage is blocked. */
       }
-      account.current = { id, loaded: true };
-      setUserId(id);
       setState(draft);
       setRecorded(isRecorded);
       setLoaded(true);
-    }
-    const changed = (event: Event) => {
-      const id =
-        (event as CustomEvent<{ userId: string | null }>).detail?.userId ??
-        null;
-      void load(
-        id,
-        Boolean(id && account.current.loaded && account.current.id === null),
-      );
-    };
-    window.addEventListener("keenfinance:session-change", changed);
-    const run = generation.current;
-    fetch("/api/auth/user", { cache: "no-store" })
-      .then((r) => r.json())
-      .then((data) => {
-        if (!disposed && generation.current === run)
-          void load(data.user?.id ?? null);
-      })
-      .catch(() => {
-        if (!disposed && generation.current === run) void load(null);
-      });
+    }, 0);
+    const counter = generation;
     return () => {
-      disposed = true;
+      window.clearTimeout(timer);
       ++counter.current;
-      window.removeEventListener("keenfinance:session-change", changed);
     };
   }, []);
   useEffect(() => {
     if (!loaded) return;
     try {
-      localStorage.setItem(progressKey(userId), JSON.stringify(state));
+      localStorage.setItem(progressKey(), JSON.stringify(state));
     } catch {
       const timer = setTimeout(() => setStorageBlocked(true), 0);
       return () => clearTimeout(timer);
     }
-  }, [state, userId, loaded]);
+  }, [state, loaded]);
   useEffect(() => {
     if (loaded) heading.current?.focus();
   }, [state.step, loaded]);
@@ -217,31 +147,17 @@ export default function GuidedPreparation() {
       w2: { ...state.w2, confirmed: false, recordId: null, source: "manual" },
     });
     setRecorded(false);
-    if (!userId) {
-      setMessage("signInUpload");
-      return;
-    }
     if (input.size > 8 * 1024 * 1024) {
       setMessage("uploadFallback");
       return;
     }
     setBusy(true);
     try {
-      const body = new FormData();
-      body.append("file", input);
-      const response = await fetch("/api/documents/upload", {
-        method: "POST",
-        body,
-      });
-      const data = await response.json();
+      const result = await extractTaxPdf(
+        new Uint8Array(await input.arrayBuffer()),
+      );
       if (run !== generation.current) return;
-      if (
-        !response.ok ||
-        data.userId !== userId ||
-        data.extraction?.formType !== "w2"
-      )
-        throw Error();
-      const result: Extraction = data.extraction;
+      if (result.formType !== "w2") throw Error();
       setExtraction(result);
       const fields = { ...blankPreparation().w2.fields };
       for (const key of W2_FIELDS) {
@@ -270,39 +186,32 @@ export default function GuidedPreparation() {
       if (run === generation.current) setBusy(false);
     }
   }
-  async function save(record = false) {
-    if (!userId) {
-      setMessage("signIn");
+  function recordW2() {
+    const payload = state.w2.recordId
+      ? state
+      : { ...state, w2: { ...state.w2, recordId: crypto.randomUUID() } };
+    if (
+      !payload.w2.confirmed ||
+      !Object.values(payload.w2.fields).some((value) => value !== null)
+    )
       return;
-    }
-    const run = generation.current;
-    const payload =
-      record && !state.w2.recordId
-        ? { ...state, w2: { ...state.w2, recordId: crypto.randomUUID() } }
-        : state;
-    if (payload !== state) change(payload);
-    setBusy(true);
     try {
-      const response = await fetch(
-        record ? "/api/preparation/w2" : "/api/preparation",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-preparation-language": i18n.language,
-          },
-          body: JSON.stringify(payload),
-        },
-      );
-      const data = await response.json();
-      if (run !== generation.current) return;
-      if (!response.ok || data.userId !== userId) throw Error();
-      setMessage(record ? "savedW2" : "savedCloud");
-      if (record) setRecorded(true);
+      recordLocalForm({
+        id: payload.w2.recordId,
+        form_type: "w2",
+        tax_year: 2025,
+        language: i18n.language,
+        issuer: payload.w2.employer,
+        fields: payload.w2.fields,
+        source: payload.w2.source,
+      });
+      change(payload);
+      setRecorded(true);
+      setMessage("savedW2");
+      window.dispatchEvent(new Event("keenfinance:forms-change"));
     } catch {
-      if (run === generation.current) setMessage("cloudError");
-    } finally {
-      if (run === generation.current) setBusy(false);
+      setStorageBlocked(true);
+      setMessage("localError");
     }
   }
   function checklistText() {
@@ -481,7 +390,6 @@ export default function GuidedPreparation() {
               }}
             />
           </label>
-          {!userId && <p>{tr("signInUpload")}</p>}
           <div className="mt-6 grid items-start gap-6 lg:grid-cols-2">
             <div>
               <h2 className="mb-4 text-lg font-semibold">{tr("manual")}</h2>
@@ -695,7 +603,7 @@ export default function GuidedPreparation() {
               <button
                 className={button}
                 disabled={busy || recorded}
-                onClick={() => void save(true)}
+                onClick={recordW2}
               >
                 {tr("recordW2")}
               </button>
@@ -771,7 +679,7 @@ export default function GuidedPreparation() {
           {tr(message)}
         </p>
       )}
-      {busy && <p role="status">{tr("saving")}</p>}
+      {busy && <p role="status">{tr("reading")}</p>}
       <aside className="mt-10 space-y-4 border-t pt-6 print:hidden">
         <p className="text-sm">
           {tr(storageBlocked ? "deviceBlocked" : "deviceSaved")}
@@ -787,13 +695,6 @@ export default function GuidedPreparation() {
             }
           >
             {tr("backup")}
-          </button>
-          <button
-            className={button}
-            disabled={busy}
-            onClick={() => void save()}
-          >
-            {tr("saveCloud")}
           </button>
           <label className={button}>
             {tr("restore")}
