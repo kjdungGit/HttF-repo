@@ -1,0 +1,9 @@
+{
+  "tolerancePoints": 0.02,
+  "checked": 2089,
+  "maximumCoordinateDifference": 0.00004687500006639311,
+  "failures": [],
+  "additionalWidgets": [],
+  "documentHashesVerified": true,
+  "passed": true
+}

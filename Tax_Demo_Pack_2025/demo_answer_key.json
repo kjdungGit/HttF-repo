@@ -1,0 +1,133 @@
+{
+  "tax_year": 2025,
+  "synthetic": true,
+  "layout": "Custom practice forms, not official replicas",
+  "identifier_policy": "Deliberately invalid SSNs/EINs; masked recipient TINs. Exempt demo fixtures from production identifier-validity checks or explain the deliberate test values. Never send to a filing service.",
+  "duplicate_policy": "Files 01-04 are alternatives, not four employers. Files 05-07 are alternatives, not three accounts. Files 08-09 are alternatives, not two payers. Test each variant separately or detect duplicates.",
+  "profiles": {
+    "Jordan Demo": {
+      "age_at_2025_end": 32,
+      "filing_status": "single",
+      "full_year_Illinois_resident": true,
+      "claimable_by_another_person": false,
+      "children": 0,
+      "wages": 36000,
+      "interest": 84.5,
+      "ordinary_federal_withholding": 2400,
+      "alternative_file_04_federal_withholding": 0,
+      "Illinois_withholding": 1782
+    },
+    "Casey Sample": {
+      "separate_profile": true,
+      "nonemployee_compensation": 1250
+    }
+  },
+  "cases": [
+    {
+      "file": "01_W2_complete.pdf",
+      "form": "W-2",
+      "profile": "Jordan Demo",
+      "scenario": "complete_with_legitimate_blanks",
+      "focus_field": "control; boxes 7-14 and 18-20",
+      "hidden_ground_truth": "No tips, care benefits, retirement entries or local wages/taxes; control number unused.",
+      "suggested_question": "Ask only if intake conflicts with the empty boxes.",
+      "expected_action": "Accept populated fields; do not flag every optional empty box. Box 9 is reserved. Unchecked boxes are not missing answers."
+    },
+    {
+      "file": "02_W2_missing_employer_EIN.pdf",
+      "form": "W-2",
+      "profile": "Jordan Demo",
+      "scenario": "missing_identifier",
+      "focus_field": "ein",
+      "hidden_ground_truth": "00-0000000 (demo only)",
+      "suggested_question": "The employer identification number is blank. Can you check the original W-2 or request a replacement from payroll?",
+      "expected_action": "Pause employer-ID mapping. Do not guess the EIN or tell the employee to alter an employer-issued record."
+    },
+    {
+      "file": "03_W2_missing_wages.pdf",
+      "form": "W-2",
+      "profile": "Jordan Demo",
+      "scenario": "missing_income",
+      "focus_field": "box1",
+      "hidden_ground_truth": "36,000.00",
+      "suggested_question": "Box 1 is blank. Can you verify taxable wages on the original W-2 or with payroll?",
+      "expected_action": "Do not copy Box 3 or Box 5 into Box 1; they can differ. Do not treat blank as zero."
+    },
+    {
+      "file": "04_W2_blank_federal_withholding.pdf",
+      "form": "W-2",
+      "profile": "Jordan Demo - alternative withholding scenario",
+      "scenario": "ambiguous_blank_confirmed_zero",
+      "focus_field": "box2",
+      "hidden_ground_truth": "0.00; different scenario from file 01",
+      "suggested_question": "Was no federal income tax withheld, or is the amount missing from this copy?",
+      "expected_action": "Presenter confirms no withholding using scenario context. Record confirmed zero with provenance; do not reuse 2,400 from another variant."
+    },
+    {
+      "file": "05_1099INT_complete.pdf",
+      "form": "1099-INT",
+      "profile": "Jordan Demo",
+      "scenario": "complete_with_legitimate_blanks",
+      "focus_field": "recipient_tin; boxes 2-17",
+      "hidden_ground_truth": "Masked TIN is intentional. Only ordinary interest of 84.50; no other reportable categories.",
+      "suggested_question": "Ask about other categories only if intake suggests they apply.",
+      "expected_action": "Accept masking on a recipient copy. Obtain full taxpayer identifier separately for an actual return, if needed; do not label masking a damaged form."
+    },
+    {
+      "file": "06_1099INT_missing_recipient_name.pdf",
+      "form": "1099-INT",
+      "profile": "Jordan Demo",
+      "scenario": "missing_identity",
+      "focus_field": "recipient",
+      "hidden_ground_truth": "Jordan Demo",
+      "suggested_question": "The recipient name is missing. Does this statement belong to you? Can you verify against the original or bank?",
+      "expected_action": "Keep ownership unverified until confirmed. A matching partial TIN alone should not silently establish ownership."
+    },
+    {
+      "file": "07_1099INT_blank_interest.pdf",
+      "form": "1099-INT",
+      "profile": "Jordan Demo",
+      "scenario": "ambiguous_blank_missing_amount",
+      "focus_field": "box1",
+      "hidden_ground_truth": "84.50",
+      "suggested_question": "Was the interest amount zero, or is the amount missing? Please check the bank tax statement.",
+      "expected_action": "Presenter chooses missing amount and verifies 84.50 from the separate guide. Do not derive interest from deposits or guess."
+    },
+    {
+      "file": "08_1099NEC_complete.pdf",
+      "form": "1099-NEC",
+      "profile": "Casey Sample",
+      "scenario": "complete_with_legitimate_blanks",
+      "focus_field": "boxes 4-7",
+      "hidden_ground_truth": "1,250.00 compensation; no federal or state withholding reported.",
+      "suggested_question": "Ask about state information only when needed by the relevant workflow.",
+      "expected_action": "Recognize nonemployee compensation; route self-employment calculations for review. Do not combine this document with Jordan's return."
+    },
+    {
+      "file": "09_1099NEC_blank_compensation.pdf",
+      "form": "1099-NEC",
+      "profile": "Casey Sample",
+      "scenario": "ambiguous_blank_missing_amount",
+      "focus_field": "box1",
+      "hidden_ground_truth": "1,250.00",
+      "suggested_question": "Is compensation missing, or did the payer issue a zero-amount statement? Can you verify the original?",
+      "expected_action": "Presenter confirms omission. Hold income mapping until verified; do not invent a value or silently use zero."
+    },
+    {
+      "file": "10_1040_partial_draft.pdf",
+      "form": "1040 selected-field draft",
+      "profile": "Jordan Demo",
+      "scenario": "unfinished_return",
+      "focus_field": "line2b; downstream lines and dependent confirmation",
+      "hidden_ground_truth": "Line 2b can be proposed as 84.50 only after confirming file 05 and taxpayer ownership. Other blank lines need intake/calculation.",
+      "suggested_question": "Your interest statement shows 84.50. Would you like to use it for taxable interest after confirming it belongs to you?",
+      "expected_action": "Guide user through evidence confirmation. Blank calculated fields are pending workflow, not a malformed payer document. No return is filed or tax/refund calculated in this sample."
+    }
+  ],
+  "sources": [
+    "https://www.irs.gov/pub/irs-prior/fw2--2025.pdf",
+    "https://www.irs.gov/pub/irs-pdf/f1099int.pdf",
+    "https://www.irs.gov/pub/irs-prior/f1099nec--2025.pdf",
+    "https://www.irs.gov/pub/irs-prior/f1040--2025.pdf"
+  ]
+}

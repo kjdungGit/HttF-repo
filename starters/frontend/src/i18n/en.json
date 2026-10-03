@@ -1,0 +1,680 @@
+{
+  "lang": {
+    "label": "Language",
+    "en": "English",
+    "es": "Spanish"
+  },
+  "speech": {
+    "listen": "Listen",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop",
+    "unsupported": "Read-aloud is not available in this browser. Try Chrome, Edge, or Safari on a computer with sound on."
+  },
+  "account": {
+    "title": "Your account",
+    "choose": "Choose your username",
+    "signin": "Sign in",
+    "label": "Account",
+    "checking": "Checking account",
+    "open": "Open account for {{name}}",
+    "close": "Close account popup",
+    "guest": "Demo guest account",
+    "signingOut": "Signing out…",
+    "signout": "Sign out",
+    "instructions": "Enter a username to start the demo. No email or password needed.",
+    "username": "Username",
+    "starting": "Starting your session…",
+    "continue": "Continue",
+    "sessionNote": "Your guest account stays signed in on this browser. Signing out starts a new account next time.",
+    "signinUnavailable": "Username sign-in isn’t enabled yet. Enable Anonymous Sign-Ins in Supabase to start the demo.",
+    "rateLimited": "Too many attempts. Please wait a little and try again.",
+    "invalidUsername": "Use a username with 2–40 letters, numbers, spaces, dots, underscores, or hyphens.",
+    "requestFailed": "We couldn’t complete that request. Please try again.",
+    "unavailable": "Account services are temporarily unavailable. Please try again.",
+    "missingUsername": "Please enter a username.",
+    "signoutFailed": "We couldn’t sign you out. Please try again."
+  },
+  "common": {
+    "or": "or",
+    "yes": "Yes",
+    "no": "No",
+    "unsure": "Not sure",
+    "submit": "Submit",
+    "saved": "Saved {{value}}",
+    "continue": "Continue",
+    "federal": "Federal",
+    "illinois": "Illinois",
+    "selectDate": "Select year, month, and date",
+    "month": "Month",
+    "year": "Year",
+    "notAnswered": "Not answered",
+    "unsureValue": "Not sure — more information needed",
+    "amountNone": "Amount not calculated",
+    "complete": ", complete",
+    "decrease": "Decrease",
+    "increase": "Increase",
+    "weekdays": [
+      "Su",
+      "Mo",
+      "Tu",
+      "We",
+      "Th",
+      "Fr",
+      "Sa"
+    ]
+  },
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "page": {
+    "kicker": "Preparation checklist",
+    "title": "Eight steps, then you file",
+    "intro": "This is a Champaign / Illinois screener for tax year 2025 — not a filed return. Click a dotted blue word anytime you want more detail.",
+    "blueWord": "blue word",
+    "blueHelp": "Those links open a short explanation of the tax idea and how to answer. Close it by clicking the word again."
+  },
+  "intro": {
+    "kicker": "Champaign · tax year 2025",
+    "title": "Filing Illinois taxes without the panic",
+    "lead": "If you had a campus job, internship, side hustle, or first full-time paycheck in 2025 and you lived around Champaign, this walkthrough is for you. KEENFinance does not file for you. It lines up the questions, forms, and official links so you can file with confidence.",
+    "heroSpeech": "Filing Illinois taxes without the panic. If you had a campus job, internship, side hustle, or first full-time paycheck in 2025 and you lived around Champaign, this walkthrough is for you. KEENFinance does not file for you. It lines up the questions, forms, and official links so you can file with confidence.",
+    "filingH2": "Is filing taxes for me?",
+    "yesIf": "Yes, if…",
+    "yes1": "You earned money in 2025 — wages, tips, gig pay, interest, or unemployment.",
+    "yes2": "You lived in Illinois for all or part of 2025, including as a student in Champaign.",
+    "yes3": "You are a young adult and a parent might still claim you. You may still need to file.",
+    "yes4": "You want to check credits like the earned income credit, student-loan interest, or Illinois work credits.",
+    "yes5": "You have not already filed an original 2025 return.",
+    "pauseIf": "Pause and get extra help if…",
+    "pause1": "You moved between states, had gig expenses, crypto, rentals, or Marketplace insurance (Form 1095-A).",
+    "pause2": "You already filed, or you need someone to click Submit — that happens at IRS, MyTax Illinois, or a VITA site.",
+    "filingSpeech": "Is filing taxes for me? Yes, if you earned money in 2025, lived in Illinois for all or part of 2025, might still be claimed by a parent, want to check credits, and have not already filed an original 2025 return. Pause and get extra help if you moved between states, had gig expenses, crypto, rentals, or Marketplace insurance, or if you already filed.",
+    "happensH2": "What actually happens",
+    "happens1": "You are reporting money earned in calendar year 2025. Most people file two returns: a federal Form 1040 and an Illinois IL-1040. Illinois starts from federal income, then uses its own exemptions. The state rate for 2025 is 4.95%. The usual filing and payment date is April 15, 2026. An extension (if you still qualify) generally moves the paperwork deadline, not the payment deadline.",
+    "happens2": "Living in Champaign today does not automatically mean you were a full-year Illinois resident in 2025. If you moved, worked in another state, or are on a visa, we will flag that as “review needed” and still give you a document list.",
+    "happensSpeech": "What actually happens. You are reporting money earned in calendar year 2025. Most people file a federal Form 1040 and an Illinois IL-1040. The state rate for 2025 is 4.95 percent. The usual filing and payment date is April 15, 2026. Living in Champaign today does not automatically mean you were a full-year Illinois resident in 2025.",
+    "rolesH2": "What we do, and what you do",
+    "keen": "KEENFinance",
+    "keenBody": "Walk you through residency, household, income, and possible credits. Build a personalized checklist. Point to official 2025 forms. Explain benefits in plain language — never as a promised refund.",
+    "you": "You",
+    "youBody": "Gather the real W-2s and 1099s, confirm the facts, then file on IRS Free File, MyTax Illinois, or with a free VITA helper. Do not enter a real SSN or bank login here — this is a guide, not the government.",
+    "rolesSpeech": "What we do, and what you do. KEENFinance walks you through residency, household, income, and possible credits, and builds a checklist. You gather the real forms, confirm the facts, then file on IRS Free File, MyTax Illinois, or with a free VITA helper. Do not enter a real Social Security number or bank login here.",
+    "wordsH2": "Words you will see",
+    "credit": "Credit",
+    "creditBody": "Lowers tax you owe. Some credits can increase a refund.",
+    "deduction": "Deduction",
+    "deductionBody": "Taken off income before tax is calculated. It is not cash handed to you.",
+    "withholding": "Withholding",
+    "withholdingBody": "Tax already taken from your paycheck.",
+    "eligible": "Appears eligible",
+    "eligibleBody": "Our supported checks passed based on what you confirmed. It is not a filed, reviewed, or accepted return.",
+    "wordsSpeech": "Words you will see. A credit lowers tax you owe. A deduction is taken off income before tax is calculated. Withholding is tax already taken from your paycheck. Appears eligible means our supported checks passed. It is not a filed return.",
+    "readyH2": "Ready when you are",
+    "readyBody": "Next you will answer a short checklist. Each circle turns into a green check when that step is done. Pick one path at a time — if you change your mind, the other subtab closes. At the end you get a recap of what you told us and which official forms to use. Then you file for real.",
+    "readySpeech": "Ready when you are. Next you will answer a short checklist. Each circle turns into a green check when that step is done. At the end you get a recap and official forms. Then you file for real.",
+    "cta": "I'm ready to file my taxes!"
+  },
+  "nav": {
+    "1": "Gather documents",
+    "1a": "Upload tax documents",
+    "2": "Confirm 2025 Illinois year",
+    "2a": "Full-year Illinois",
+    "2b": "Moved or multi-state",
+    "3": "Household snapshot",
+    "3a": "Filing on your own",
+    "3b": "Someone may claim you",
+    "4": "Where the money came from",
+    "4a": "Mostly a W-2 job",
+    "4b": "Gig or 1099 work",
+    "4c": "A mix of income",
+    "5": "Credits worth screening",
+    "5a": "Simple W-2 path",
+    "5b": "School, loans, savings",
+    "5c": "Kids, care, or a home",
+    "5d": "Needs a human review",
+    "6": "Checklist and how you will file",
+    "6a": "File it yourself",
+    "6c": "Already filed or waiting",
+    "7": "Benefits you may qualify for",
+    "8": "Your preparation recap"
+  },
+  "income": {
+    "wages": "Wages from a job (W-2)",
+    "tips": "Tips",
+    "gig": "Side job / gig / 1099",
+    "interest": "Bank interest",
+    "unemployment": "Unemployment",
+    "retirement": "Retirement or Social Security"
+  },
+  "steps": {
+    "1": {
+      "h2": "Gather payer documents — or skip ahead",
+      "p1": "IRS and Illinois want forms from whoever paid you, not a screenshot of your checking app. Upload what you already have, or skip and we will build a list as you answer. A blank IRS PDF is not a substitute for an employer",
+      "w2": "W-2",
+      "w2Help": "A W-2 is the year-end form your employer prepares. It shows wages and tax already withheld. Get it from payroll. If it never arrives, ask them first; Form 4852 is a last-resort substitute, not a homemade W-2.",
+      "uploadTitle": "Upload documents",
+      "uploadDetail": "Opens 1a. Upload a PDF, review its values, then save to your profile.",
+      "skipTitle": "Skip for now",
+      "skipDetail": "Marks step 1 complete. You can still upload later by reopening this step.",
+      "speech": "Step 1. Gather payer documents, or skip ahead. The IRS and Illinois want forms from whoever paid you, not a screenshot of your checking app. Upload what you already have, or skip and we will build a list as you answer. A blank IRS PDF is not a substitute for an employer W-2. A W-2 shows wages and tax withheld. Get it from payroll."
+    },
+    "1a": {
+      "h2": "Upload what the payer sent you",
+      "p": "Only attach copies you actually received. Click a form name to open a practice copy, fill the blanks one by one, then finish. A green check means that form is complete. A red X means it is missing or still has required blanks. Nothing here is sent to the IRS.",
+      "drop": "Drop files here or browse",
+      "types": "PDF only, up to 8 MB.",
+      "done": "I have what I need for now",
+      "speech": "Step 1a. Click a form name to open a practice PDF. Fill the blanks one by one. A green check means the form is complete. A red X means it is missing or still has required blanks."
+    },
+    "2": {
+      "h2": "Lock tax year 2025 and Illinois",
+      "p1": "We are preparing money earned in calendar year 2025, usually filed in 2026. Living in Champaign today does not prove you were a full-year",
+      "resident": "Illinois resident",
+      "residentHelp": "Full-year residents generally file a resident IL-1040. If you moved or worked in another state, Illinois may need Schedule NR. Answer based on 2025, not where your mail goes now.",
+      "p2": ". Answer Yes / No / Not sure — “not sure” is stored as unknown, not as No.",
+      "qYear": "Are we preparing taxes for money you earned in 2025?",
+      "qResident": "U.S. resident for tax purposes",
+      "qResidentHelp": "Tax residency is not the same as a Champaign mailing address or an immigration label. If you are unsure, pick Not sure. We will flag review instead of guessing.",
+      "qResidentPre": "Are you a U.S. citizen or",
+      "qResidentPost": "for all of 2025?",
+      "qFiled": "Did you already file your 2025 return?",
+      "qExt": "If you have not filed, did you request an on-time extension?",
+      "fullTitle": "I lived in Illinois all of 2025",
+      "fullDetail": "Opens 2a. Typical for a Champaign student or worker who did not move mid-year.",
+      "movedTitle": "I moved or also worked in another state",
+      "movedDetail": "Opens 2b and closes 2a. Part-year / nonresident cases need extra review.",
+      "speech": "Step 2. Lock tax year 2025 and Illinois. We are preparing money earned in calendar year 2025, usually filed in 2026. Living in Champaign today does not prove you were a full-year Illinois resident. Answer yes, no, or not sure. Not sure is stored as unknown, not as no."
+    },
+    "2a": {
+      "h2": "Full-year Illinois resident",
+      "p1": "You will usually prepare a federal",
+      "f1040": "Form 1040",
+      "f1040Help": "Your main federal income tax return. 2025 forms are labeled 2025 — confirm the printed year before you file.",
+      "p2": "and a resident",
+      "il1040": "IL-1040",
+      "il1040Help": "Your Illinois income tax return. Illinois starts from federal income, then applies its own exemptions. For ordinary 2025 cases the personal exemption is $2,850 per eligible person. The state rate is 4.95%. We still will not invent a refund.",
+      "p3": ". Ordinary filing and payment date: April 15, 2026. An extension generally moves paperwork, not the payment date.",
+      "done": "This matches me",
+      "speech": "Step 2a. Full-year Illinois resident. You will usually prepare a federal Form 1040 and a resident IL-1040. Illinois starts from federal income. The ordinary filing and payment date is April 15, 2026."
+    },
+    "2b": {
+      "h2": "Moved or multi-state — review needed",
+      "p1": "This is not “you cannot file.” It means our supported residency rules stop here. Part-year and nonresident Illinois filers often add",
+      "nr": "Schedule NR",
+      "nrHelp": "Illinois Schedule NR splits income among states. Use software or a VITA volunteer for the split. Keep collecting documents in this checklist.",
+      "states": "Which other state(s), if you remember?",
+      "done": "Keep my document list and continue",
+      "speech": "Step 2b. Moved or multi-state. This is review needed, not you cannot file. Part-year and nonresident Illinois filers often add Schedule NR."
+    },
+    "3": {
+      "h2": "Who counts in your tax household",
+      "p1": "Use December 31, 2025 for marriage. Dates, not today’s age, drive the rules. “Single parent” is not automatically",
+      "hoh": "head of household",
+      "hohHelp": "Head of household has extra tests: unmarried or considered unmarried, a qualifying person, and paying more than half the home’s upkeep. Dependent parents living elsewhere have their own rules. We only screen; Pub 501 has the official tests.",
+      "p2": ". Do not type a real SSN — identifier type is enough for this demo.",
+      "qMarried": "Were you married on December 31, 2025?",
+      "dob": "Your date of birth (age rules use this date, not how old you feel today)",
+      "blind": "legal blindness",
+      "blindHelp": "Totally blind, or certified limits of 20/200 or a 20-degree field in the better eye with correction. Confirm; do not infer this from using a screen reader or large text.",
+      "qBlindPre": "Do you meet the tax definition of",
+      "qKids": "Do you have children or other people you may claim?",
+      "childCount": "How many people might you claim? (not everyone who lives with you qualifies)",
+      "person": "Person {{n}}",
+      "childDob": "Date of birth (federal child credit generally needs under 17 at year-end; Illinois child credit uses under 12)",
+      "months": "Months they lived with you in 2025",
+      "indepTitle": "Nobody else claims me",
+      "indepDetail": "Opens 3a. Needed for several credits, including federal childless EITC.",
+      "depTitle": "A parent or someone else might claim me",
+      "depDetail": "Opens 3b. Common for students. You may still need to file.",
+      "speech": "Step 3. Who counts in your tax household. Use December 31, 2025 for marriage. Dates, not today’s age, drive the rules. Single parent is not automatically head of household. Do not type a real Social Security number."
+    },
+    "3a": {
+      "h2": "Filing as independent",
+      "p1": "Confirm with anyone who claimed you last year. If you can be claimed as a",
+      "dep": "dependent",
+      "depHelp": "Living with someone is not enough. Different credits use different tests. Dependents also use a different standard-deduction worksheet — we will not auto-grant the full $15,750 single amount.",
+      "p2": ", federal childless EITC usually fails even if Illinois expanded EITC might still be screened.",
+      "speech": "Step 3a. Filing as independent. Confirm with anyone who claimed you last year. If you can be claimed as a dependent, federal childless EITC usually fails even if Illinois expanded EITC might still be screened."
+    },
+    "3b": {
+      "h2": "You might be a dependent",
+      "p": "Record two facts separately: could someone claim you, and did they? Those answers feed different benefits. Talk so you do not both e-file conflicting statuses.",
+      "qCould": "Could someone else claim you on their 2025 return?",
+      "qDid": "Did they actually claim you (if you know)?",
+      "speech": "Step 3b. You might be a dependent. Record two facts separately: could someone claim you, and did they?"
+    },
+    "4": {
+      "h2": "What kinds of income showed up",
+      "p": "Do not guess taxable wages from a Venmo or paycheck deposit. Use the payer form. Pick the closest path — you can still list extra types inside it. Amounts you submit here are facts you confirmed, not a refund estimate.",
+      "w2Title": "Mostly a W-2 job",
+      "w2Detail": "Campus job, internship, or hourly work with an employer.",
+      "gigTitle": "Gig, freelance, or 1099",
+      "gigDetail": "Opens 4b. Self-employment tax and expenses need review.",
+      "mixTitle": "A mix, or I am not sure",
+      "mixDetail": "Wages plus interest, unemployment, or a side job.",
+      "speech": "Step 4. What kinds of income showed up. Do not guess taxable wages from a deposit. Use the payer form. Pick the closest path: mostly a W-2 job, gig or 1099, or a mix."
+    },
+    "4a": {
+      "h2": "W-2 wages",
+      "p": "Collect every W-2. Missing one? Ask payroll first. We will not treat a net deposit as wages.",
+      "speech": "Step 4a. W-2 wages. Collect every W-2. If one is missing, ask payroll first. We will not treat a net deposit as wages."
+    },
+    "4b": {
+      "h2": "Gig and 1099 income",
+      "p": "Platforms may send a 1099, but you still report all self-employment income. We will not invent deductions from transaction labels — keep notes and mark review if you had expenses.",
+      "speech": "Step 4b. Gig and 1099 income. Platforms may send a 1099, but you still report all self-employment income. We will not invent deductions from transaction labels."
+    },
+    "4c": {
+      "h2": "Mixed income",
+      "p1": "Check every type that applies. Keep",
+      "earned": "earned income",
+      "earnedHelp": "Pay from work, including wages and many gig earnings. EITC compares earned income and AGI separately against a ceiling. Being under the ceiling is not enough by itself.",
+      "p2": "separate from bank interest.",
+      "speech": "Step 4c. Mixed income. Check every type that applies. Keep earned income separate from bank interest."
+    },
+    "4x": {
+      "foreign": "Did you receive any foreign income or file Form 2555?",
+      "wages": "Wages from W-2s (optional). Use plus or minus then Submit. Unknown is better than a guess.",
+      "other": "Other work or gig income you already know from forms",
+      "invest1": "Investment income from forms (interest/dividends). Federal",
+      "eitc": "EITC",
+      "eitcHelp": "Earned Income Tax Credit. Investment income must be $11,950 or less for 2025. We screen; we do not compute your credit.",
+      "invest2": "uses this separately from wages."
+    },
+    "5": {
+      "h2": "Which extra story is closest?",
+      "p1": "We show separate federal and Illinois cards. Labels mean",
+      "eligible": "appears eligible",
+      "eligibleHelp": "Supported checks passed on facts you confirmed. It is not a reviewed, filed, or accepted return.",
+      "more": "more information needed",
+      "moreHelp": "A required fact is missing, unclear, or contradictory. Missing is not No.",
+      "review": "review needed",
+      "reviewHelp": "Outside our rules (moves, gigs, Marketplace insurance, custody fights). Keep the checklist.",
+      "p2": ". A published maximum is not your award. Amount not calculated until a real engine runs. Do not add credits and deductions into “your refund.”",
+      "simpleTitle": "Simple: job, maybe rent, no kids",
+      "simpleDetail": "Standard deduction and possible federal/Illinois EITC screening.",
+      "schoolTitle": "School, student loans, or retirement savings",
+      "schoolDetail": "1098-E, education credits, Saver’s Credit (students often excluded).",
+      "kidsTitle": "Kids, childcare, or an Illinois home I own",
+      "kidsDetail": "Child credits, care, property tax, K–12 fees. Renters skip property tax credit.",
+      "messyTitle": "Something messier",
+      "messyDetail": "Marketplace 1095-A, tips/overtime, or self-employment review.",
+      "speech": "Step 5. Which extra story is closest? We show separate federal and Illinois cards. Appears eligible means supported checks passed. A published maximum is not your award."
+    },
+    "5a": {
+      "h2": "Simple W-2 screening",
+      "p1": "For ordinary independent single filers, the 2025 federal",
+      "std": "standard deduction",
+      "stdHelp": "$15,750 single or married filing separately; $31,500 joint; $23,625 head of household. It lowers income used to compute tax — it is not money paid to you. Age 65+ or qualifying blindness can add $2,000 (single/HOH) or $1,600 (married categories). Dependents use a different worksheet.",
+      "p2": "is $15,750. Rent does not create the Illinois property tax credit. A 22-year-old may fail federal childless EITC on age (generally 25–64) and still be screened for Illinois expanded EITC (ages 18–24 without a child).",
+      "c1t": "Federal earned income credit",
+      "c1l": "Screen, do not promise",
+      "c1b": "Needs earned income and AGI under the table for your filing status and qualifying children, investment income ≤ $11,950, and other tests. Childless filers generally need age 25–64 and cannot be someone else’s dependent. Amount not calculated.",
+      "c2t": "Illinois earned income credit",
+      "c2l": "Evaluate even if federal is no",
+      "c2b": "Ordinary Illinois EITC is 20% of federal EITC. Expanded coverage can include qualifying ITIN filers and workers 18–24 or 65+ without a child. Use the state worksheet — do not return zero only because federal EITC is zero.",
+      "speech": "Step 5a. Simple W-2 screening. For ordinary independent single filers, the 2025 federal standard deduction is $15,750. Rent does not create the Illinois property tax credit. A 22-year-old may fail federal childless EITC on age and still be screened for Illinois expanded EITC."
+    },
+    "5b": {
+      "h2": "School, loans, and savings",
+      "p": "Loan interest and college tuition are different branches. A 1098-T alone does not prove an education credit.",
+      "qLoan": "Did you pay student-loan interest (not just principal)?",
+      "loanAmt": "Qualified interest you paid in 2025 (max we screen is $2,500)",
+      "qCollege": "Did you pay college tuition?",
+      "able": "ABLE account",
+      "ableHelp": "Your contributions may feed the Saver’s Credit. Employer match and rollovers do not count. Full-time students during any part of five calendar months are generally excluded.",
+      "qRetPre": "Did you put your own money into a retirement plan or",
+      "qRetPost": "you own?",
+      "c1t": "Student-loan interest deduction",
+      "c1l": "Deduction, not a credit",
+      "c1b": "Smaller of qualified interest paid or $2,500. 2025 phaseout MAGI $85,000–$100,000 if not joint. Excludes many MFS and claimed-dependent cases. Claim through Schedule 1.",
+      "c2t": "College education credits",
+      "c2l": "Review needed before claiming",
+      "c2b": "AOTC up to $2,500 per eligible student (first four postsecondary years). LLC up to $2,000 per return. Do not claim both for the same student. Form 8863.",
+      "c3t": "Saver’s Credit",
+      "c3l": "Nonrefundable; students usually out",
+      "c3b": "2025 AGI ceilings include $39,500 single. Rates 10/20/50% on up to $2,000 of eligible contributions per person. Form 8880. Amount not calculated.",
+      "speech": "Step 5b. School, loans, and savings. Loan interest and college tuition are different branches. A 1098-T alone does not prove an education credit."
+    },
+    "5c": {
+      "h2": "Kids, care, or a home you own",
+      "p": "Federal child credit generally needs a child under 17 at year-end. Illinois child credit is 40% of Illinois EITC for an eligible child under 12 — not a flat amount per kid. A home bought in 2025 generally cannot create the 2025 property tax credit. Renters skip it.",
+      "qCare": "Did you pay someone to care for a child or other person so you could work or look for work?",
+      "qK12": "Did you pay Illinois K–12 tuition, book fees, or lab fees?",
+      "qHome": "Did you own and live in an Illinois home in 2024, and pay its property taxes in 2025?",
+      "propAmt": "Eligible Illinois property tax paid in 2025 (credit is generally 5% of this, limited by state tax)",
+      "c1t": "Child Tax Credit / ACTC",
+      "c1l": "Schedule 8812",
+      "c1b": "2025 CTC maximum $2,200 per qualifying child; refundable ACTC portion up to $1,700 subject to calculation. Do not add them as two independent awards.",
+      "c2t": "Illinois property tax credit",
+      "c2l": "Owners, Schedule ICR",
+      "c2b": "Need the bill, payment proof, and parcel number (Champaign County Treasurer if local). Penalties and non-residence portions do not count.",
+      "c3t": "K–12 education expense credit",
+      "c3l": "25% of qualified costs above $250, max $750 total",
+      "c3b": "Not per child. After-school care and ordinary supplies do not automatically qualify.",
+      "speech": "Step 5c. Kids, care, or a home you own. Federal child credit generally needs a child under 17 at year-end. Illinois child credit is 40 percent of Illinois EITC for an eligible child under 12. Renters skip the property tax credit."
+    },
+    "5d": {
+      "h2": "Review needed — still useful",
+      "p": "“We have not checked this benefit” is different from “you cannot claim it.” Take 1095-A, gig records, or overtime stubs to software or VITA.",
+      "qMkt": "Marketplace health insurance or Form 1095-A?",
+      "qTips": "Qualifying tips or FLSA overtime premium in 2025?",
+      "c1t": "Form 8962 / 1095-A",
+      "c1l": "Can raise tax owed",
+      "c1b": "Advance premium tax credit must be reconciled. Missing this can stall e-file.",
+      "c2t": "Schedule 1-A tips / overtime",
+      "c2l": "Not all extra hours count",
+      "c2b": "2025 caps: tips $25,000 per return; overtime $12,500 nonjoint / $25,000 joint. Do not assume Illinois copies the federal deduction. Amount not calculated.",
+      "done": "Continue with a review flag",
+      "speech": "Step 5d. Review needed, still useful. We have not checked this benefit is different from you cannot claim it. Take 1095-A, gig records, or overtime stubs to software or VITA."
+    },
+    "6": {
+      "h2": "How do you want to file for real?",
+      "p": "KEENFinance stops at a preparation summary. You still submit the 1040 and IL-1040 yourself (or with a volunteer). Only one subtab stays open.",
+      "selfTitle": "I will file myself",
+      "selfDetail": "Official 2025 PDFs, MyTax Illinois, IRS Free File.",
+      "waitTitle": "I already filed, or I am waiting on forms",
+      "waitDetail": "Do not file a second original return.",
+      "speech": "Step 6. How do you want to file for real? KEENFinance stops at a preparation summary. You still submit the 1040 and IL-1040 yourself or with a volunteer."
+    },
+    "6a": {
+      "h2": "File it yourself",
+      "p": "Use 2025 Form 1040 and IL-1040. Confirm the printed year. Field helpers on those sites should cite the form name, year, line label, and your confirmed value — never invent a missing box.",
+      "done": "Add this to my recap",
+      "speech": "Step 6a. File it yourself. Use 2025 Form 1040 and IL-1040. Confirm the printed year."
+    },
+    "6c": {
+      "h2": "Pause before another return",
+      "p": "If a 2025 original return is already in, you need an amendment — not a second 1040. Still waiting on a W-2? Ask payroll before Form 4852.",
+      "speech": "Step 6c. Pause before another return. If a 2025 original return is already in, you need an amendment, not a second 1040."
+    },
+    "7": {
+      "h2": "Benefits this walkthrough says you may qualify for",
+      "p": "These are screening results from your answers — not an award, not a refund, and not tax advice. “Appears eligible” only means the supported questions pointed this way. Amounts are not calculated here.",
+      "done": "Continue to my recap",
+      "speech": "Step 7. Benefits you may qualify for. These are screening results from your answers, not an award and not a refund. Amounts are not calculated here."
+    },
+    "8": {
+      "h2": "What you built — not a filed return",
+      "p": "Preparation summary for tax year 2025. “Appears eligible” only means our supported questions were answered. No refund total is shown.",
+      "done": "Mark my recap complete",
+      "next": "Next action: take this list to Form 1040 and MyTax Illinois. Ordinary 2025 deadline: April 15, 2026.",
+      "speech": "Step 8. What you built is a preparation summary, not a filed return. Appears eligible only means our supported questions were answered. No refund total is shown. Ordinary 2025 deadline is April 15, 2026."
+    }
+  },
+  "forms": {
+    "w2": {
+      "name": "Form W-2",
+      "summary": "Job wages and withholding. Employer/payroll portal; request a replacement if missing.",
+      "fields": {
+        "employeeName": { "label": "Your name as shown on the W-2", "help": "Find the employee section (usually boxes c/e on the left). Type the name exactly as payroll printed it — first, middle initial, last — even if you go by a nickname or a different spelling on campus. This is who the IRS thinks earned these wages." },
+        "employerName": { "label": "Employer name", "help": "This is the business that paid you, usually in box c. Campus jobs often list the university, a department, or a staffing vendor — not your supervisor’s name. If you had two jobs, you need a separate W-2 for each employer." },
+        "ein": { "label": "Employer EIN (box b)", "help": "The Employer Identification Number is a 9-digit tax ID for the business, usually formatted like 12-3456789, in box b near the employer name. It is not your Social Security number. If this demo copy is blank, type the number from the original W-2 or ask payroll for a replacement — do not invent one." },
+        "wages": { "label": "Box 1 — wages, tips, other compensation", "help": "Box 1 is your taxable wages for the year, not the amount that hit your bank account. Copy the dollar amount with cents (for example 36000.00). Do not copy box 3 or box 5 into this field; those Social Security and Medicare wages can be different. A blank box 1 is missing information, not automatically zero." },
+        "federalWithheld": { "label": "Box 2 — federal income tax withheld", "help": "Box 2 is federal income tax already sent to the IRS from this job. Copy the printed amount. If nothing was withheld, enter 0.00 only when you are sure the box is meant to be zero — do not copy Illinois tax from boxes 17–19, and do not reuse a number from a different sample W-2." },
+        "ssWages": { "label": "Box 3 — Social Security wages", "help": "Box 3 is wages counted for Social Security tax. It is often close to box 1 but not always (tips, retirement, or wage-base limits can change it). Copy what is printed. If your copy is empty, leave this optional field blank rather than guessing." },
+        "stateWages": { "label": "Box 16 — state wages", "help": "Box 16 is wages this employer reported to a state, usually Illinois on a Champaign job. Copy the amount next to the state name. If you also worked in another state, keep that W-2 separate instead of adding the numbers here." }
+      }
+    },
+    "nec": {
+      "name": "1099-NEC / 1099-K / 1099-MISC",
+      "summary": "Side jobs and platforms, plus your own income/expense notes.",
+      "fields": {
+        "payerName": { "label": "Payer or platform name", "help": "This is who paid you for freelance, gig, or contract work — a client, app, or marketplace — printed in the payer box on the left. Use that legal name, not a nickname or the name of the person who messaged you in the app." },
+        "recipientName": { "label": "Your name on the form", "help": "Copy your name from the recipient section. It must match what the payer has on file. If it is blank on a practice copy, type your legal name as it should appear on a tax return." },
+        "compensation": { "label": "Nonemployee compensation (box 1)", "help": "Box 1 on Form 1099-NEC is the gross amount they paid you before you subtract expenses. Enter dollars and cents. This is not automatically profit, and a blank box 1 is not zero — if the copy is empty, fill the real amount from the original form or your payment records." },
+        "federalWithheld": { "label": "Federal income tax withheld", "help": "Box 4 is tax the payer already sent to the IRS. Gig and freelance forms are often blank here. Leave it empty if nothing was withheld, or enter 0.00 if the form shows zero. Do not copy state tax into this box." },
+        "stateIncome": { "label": "State income reported", "help": "If the form shows state income (often on the right), copy that amount. If that area is empty, leave this optional field blank. Do not invent Illinois wages from your bank deposits." }
+      }
+    },
+    "int": {
+      "name": "1099-INT",
+      "summary": "Bank interest. Download from the bank tax-document portal.",
+      "fields": {
+        "payerName": { "label": "Bank or payer name", "help": "This is the bank, credit union, or broker that paid interest, in the payer box. Use the institution name on the form, not the nickname of the checking product." },
+        "recipientName": { "label": "Your name on the account", "help": "Copy the name in the recipient box. On a joint account it may list one owner or both. If this practice copy left the name blank, type the name that belongs on the account — do not leave a required identity field empty." },
+        "interest": { "label": "Box 1 — interest income", "help": "Box 1 is ordinary interest credited during 2025 (for example 84.50). Even small amounts can still go on a return. Copy the printed figure. A blank box 1 is missing data, not a silent zero, unless you confirm the account earned nothing." },
+        "federalWithheld": { "label": "Box 4 — federal tax withheld", "help": "Box 4 is backup withholding, which most student accounts never have. If the box is empty, leave this optional field blank. If it shows an amount, copy it exactly." }
+      }
+    },
+    "e": {
+      "name": "1098-E",
+      "summary": "Student-loan interest. Interest under $600 can still count even without this form.",
+      "fields": {
+        "lenderName": { "label": "Lender or servicer", "help": "This is the company that collected your student-loan payments and sent the 1098-E. It may be a servicer, not the school and not the original lender you remember from freshman year. Copy the name in the lender box." },
+        "borrowerName": { "label": "Borrower name", "help": "The borrower is the student legally responsible for the loan. Parents who only helped pay should not put their own name here unless they are the borrower on the form." },
+        "loanInterest": { "label": "Box 1 — student loan interest received", "help": "Box 1 is interest you paid in 2025, not the remaining loan balance and not the monthly payment. Copy dollars and cents. If you paid interest but never received a 1098-E because it was under $600, you can still enter the interest from your servicer statement." }
+      }
+    },
+    "t": {
+      "name": "1098-T",
+      "summary": "College tuition billed. You still need what you actually paid and any grants.",
+      "fields": {
+        "schoolName": { "label": "College or school name", "help": "This is the school that billed tuition — Champaign students often see University of Illinois. Copy the institution name from the 1098-T header, not the name of a single class or professor." },
+        "studentName": { "label": "Student name", "help": "The student the 1098-T is for. If this is your return, that should be you. A parent filing separately would use the student’s form only if they are allowed to claim the education credit." },
+        "tuition": { "label": "Payments received for qualified tuition", "help": "Most schools now report box 1 (payments received). Some still report box 2 (amounts billed). Copy the box your form actually fills. This is not automatically the education credit — scholarships and what you personally paid still matter." },
+        "grants": { "label": "Scholarships or grants", "help": "Box 5 is scholarships or grants the school administered. Copy it even if you think aid was “free money.” Grants can reduce an education credit, so skipping a filled box 5 can overstate a credit later." }
+      }
+    },
+    "g": {
+      "name": "1099-G",
+      "summary": "Unemployment from the issuing state agency’s document portal.",
+      "fields": {
+        "agencyName": { "label": "Payer (state agency)", "help": "Unemployment is paid by a state agency, not your old employer. Copy the payer name from the 1099-G. For Illinois claims this is usually the state unemployment office." },
+        "recipientName": { "label": "Your name", "help": "Copy the name on the unemployment claim. It should match the person who received the payments." },
+        "unemployment": { "label": "Box 1 — unemployment compensation", "help": "Box 1 is taxable unemployment paid to you in 2025. Copy the annual total, not a single weekly deposit. Unemployment is usually taxable even if no tax was withheld." },
+        "federalWithheld": { "label": "Box 4 — federal tax withheld", "help": "Only some people elect withholding on unemployment. If box 4 is empty, leave this optional field blank. If it has an amount, copy it; that tax already went to the IRS." }
+      }
+    },
+    "a": {
+      "name": "1095-A",
+      "summary": "Marketplace health coverage. Required if you had advance premium credits.",
+      "fields": {
+        "marketplaceName": { "label": "Marketplace name", "help": "This is Healthcare.gov or the state marketplace that sent Form 1095-A. It is not employer coverage from a W-2 job and not a campus clinic bill. Copy the marketplace name from the form." },
+        "recipientName": { "label": "Recipient name", "help": "The recipient is the person the policy is issued to. Copy that name. Family members listed in the coverage table are additional information for a helper, not a replacement for this field." },
+        "premium": { "label": "Monthly enrollment premium", "help": "Use the premium column from the 1095-A (monthly rows or the annual total if you are entering one figure here). Do not mix this with employer health coverage or a campus insurance waiver." },
+        "advanceCredit": { "label": "Advance payment of premium tax credit", "help": "This is what the marketplace already paid toward your premium (the APTC column). Form 8962 later reconciles it with a helper. Enter the form amount. Missing this on a real return can stall e-file." }
+      }
+    },
+    "prior": {
+      "name": "Prior-year return",
+      "summary": "Helps match last year’s AGI if software asks. Optional.",
+      "fields": {
+        "taxYear": { "label": "Tax year of that return", "help": "Look at the year printed at the top of page 1. If you are preparing 2025, last year’s return is usually 2024. Do not type the year you are filing now unless that is actually the form in front of you." },
+        "filingName": { "label": "Name on that return", "help": "Type your legal name as it appeared on that 1040, usually near the top of page 1. This helps match the person on the draft. A blank name on a practice 1040 means the form is still incomplete." },
+        "wagesNoted": { "label": "Wages noted on that return (line 1a)", "help": "If the old 1040 shows wages on line 1a, copy that amount for your notes. This optional field is a reminder of last year’s job income; it does not replace this year’s W-2." },
+        "taxableInterest": { "label": "Taxable interest (line 2b)", "help": "Line 2b is taxable interest from banks (the 1099-INT total that belongs on the 1040). Copy the printed amount. On this practice pack the draft 1040 leaves line 2b empty on purpose — enter the interest from your 1099-INT (for example 84.50) if you are completing the exercise." }
+      }
+    }
+  },
+  "docs": {
+    "id": "Photo ID and your filing address for 2025.",
+    "files": "Files already attached in this tab: {{names}}.",
+    "none": "Payer forms still to collect (nothing uploaded yet).",
+    "w2": "Form W-2 from each employer — payroll portal or a replacement from HR.",
+    "gig": "1099-NEC/K/MISC plus your own income/expense log. Gig totals are not automatic write-offs.",
+    "int": "Form 1099-INT from each bank.",
+    "unemp": "Form 1099-G from the state unemployment site.",
+    "e": "Form 1098-E or a servicer year-end interest statement.",
+    "t": "Form 1098-T, the bursar ledger, and which costs you actually paid.",
+    "ret": "Year-end contribution record (W-2 box 12 or account statement).",
+    "care": "Childcare provider statement with expenses and identifying details (W-10 if you need their tax ID).",
+    "k12": "Itemized K–12 tuition, book, or lab receipts — not ordinary school supplies.",
+    "home": "Illinois property tax bill, proof of 2025 payment, and parcel number (Champaign County Treasurer if local).",
+    "mkt": "Form 1095-A from the Marketplace — required before many e-files go through.",
+    "tips": "Pay stubs that separate tips or FLSA overtime premium.",
+    "kids": "Child/dependent facts on file: {{count}} person(s). Bring relationship, support, and identifier-type details — not SSNs in this demo.",
+    "forms": "Federal Form 1040 and Illinois IL-1040. Add Schedule EIC, 8812, IL-E/EITC, ICR, 8880, 2441, 8863, or 1-A only if that branch applied.",
+    "l1040": "2025 Form 1040 (PDF)",
+    "lil": "Illinois IL-1040 and schedules",
+    "mytax": "MyTax Illinois",
+    "vita": "IRS free tax-preparation locator"
+  },
+  "recap": {
+    "upload": "You started from uploaded documents.",
+    "skip": "You skipped upload and jumped into questions.",
+    "review": "Residency was flagged for review{{states}}.",
+    "fullYear": "You treated 2025 as a full-year Illinois situation.",
+    "claimed": "You noted that someone else may claim you.",
+    "independent": "You described yourself as independent for this return.",
+    "gig": "Income path: gig / 1099.",
+    "mix": "Income path: mixed sources.",
+    "w2": "Income path: mostly W-2 wages.",
+    "school": "You screened school, loans, or retirement credits.",
+    "kids": "You screened kids, care, or homeowner credits.",
+    "messy": "You kept a review flag for insurance, tips, or other complexity.",
+    "simple": "You screened the simple W-2 / renter path.",
+    "vita": "Filing plan: free VITA / IRS helper.",
+    "wait": "Filing plan: do not submit a second original return.",
+    "self": "Filing plan: self-file with official 2025 forms.",
+    "benefits": "You reviewed the credits and benefits that matched your answers.",
+    "taxYear": "Tax year locked",
+    "usRes": "U.S. tax resident (2025)",
+    "filed": "Already filed?",
+    "ext": "On-time extension?",
+    "married": "Married 12/31/2025",
+    "dob": "Date of birth",
+    "blind": "Tax blindness (self-confirmed)",
+    "could": "Might be claimed",
+    "was": "Was claimed",
+    "people": "People you may claim",
+    "peopleOn": "{{count}} on file: {{detail}}",
+    "personLine": "Person {{n}} DOB {{dob}}, {{months}} months",
+    "unset": "unset",
+    "foreign": "Foreign income / Form 2555",
+    "types": "Income types",
+    "notListed": "Not listed",
+    "wages": "Wages noted",
+    "other": "Other work income noted",
+    "invest": "Investment income noted",
+    "loans": "Student-loan interest",
+    "loanAmt": "Interest amount noted",
+    "college": "College tuition",
+    "ret": "Retirement contributions",
+    "home": "Illinois homeowner credit facts",
+    "prop": "Property tax paid (noted)",
+    "care": "Childcare so you could work",
+    "k12": "Illinois K–12 fees",
+    "mkt": "Marketplace / 1095-A",
+    "tips": "Tips / overtime",
+    "files": "Documents in this browser",
+    "noFiles": "None uploaded",
+    "notEntered": "Not entered"
+  },
+  "fill": {
+    "finished": "I'm finished filling out this file",
+    "requiredError": "Required Fields Not Filled.",
+    "help": "What this question is asking",
+    "close": "Close form",
+    "question": "Question {{n}} of {{total}}",
+    "back": "Previous",
+    "next": "Next question",
+    "scrollHint": "Look over the form first. Scroll down to fill anything that is still blank.",
+    "answersHeading": "Answers still needed on this form",
+    "filled": "Filled",
+    "needed": "Required — still blank",
+    "optional": "Optional",
+    "demoTitle": "Prototype Demo Files",
+    "demoHint": "These practice PDFs are already on the site. Load Complete files one at a time to get green checks. Load Not Complete files one at a time to keep a red X, then type the missing answers in the panel. Nothing is sent to the IRS.",
+    "demoDrop": "Or drop a completed or incomplete demo PDF here",
+    "demoTypes": "PDF only. Load one file at a time so judges can see the checker.",
+    "demoMatched": "Loaded {{name}} as {{form}}.",
+    "demoComplete": "{{name}} filled {{form}} — all required boxes are present.",
+    "demoIncomplete": "{{name}} opened {{form}} — required boxes are still missing. Enter them in the panel.",
+    "demoUnknown": "Could not match {{name}} to a listed form.",
+    "demoLoad": "Load into checker",
+    "demoCompleteFolder": "Complete",
+    "demoIncompleteFolder": "Not Complete",
+    "statusComplete": "Uploaded and complete",
+    "statusIncomplete": "Started, but required blanks remain",
+    "statusMissing": "Not uploaded yet"
+  },
+  "benefits": {
+    "likely": "Appears eligible based on your answers",
+    "maybe": "Possible — a tax helper should confirm",
+    "empty": "Answer the earlier steps so we can list matching credits. Nothing is awarded here.",
+    "disclaimer": "KEENFinance does not calculate a refund. Take this list to IRS Free File, MyTax Illinois, or a VITA site.",
+    "std": {
+      "jurisdiction": "Federal",
+      "title": "Standard deduction",
+      "body": "Most student and first-job returns use the standard deduction instead of itemizing. Your exact amount depends on filing status."
+    },
+    "ilExempt": {
+      "jurisdiction": "Illinois",
+      "title": "Illinois personal exemption",
+      "body": "Illinois starts from federal income, then applies its own exemptions. Full-year residents usually claim this on IL-1040."
+    },
+    "eitc": {
+      "jurisdiction": "Federal",
+      "title": "Earned Income Credit (EITC)",
+      "body": "A refundable credit for people who worked. You can qualify with or without children, but income and filing-status tests apply."
+    },
+    "ilEitc": {
+      "jurisdiction": "Illinois",
+      "title": "Illinois Earned Income Credit",
+      "body": "Illinois has a matching earned-income credit. It follows the federal EITC idea and is claimed on the Illinois return."
+    },
+    "ctc": {
+      "jurisdiction": "Federal",
+      "title": "Child tax credit / other dependent credit",
+      "body": "Possible if you have a qualifying child or dependent. Age, residency, and support tests still have to be met on the real return."
+    },
+    "care": {
+      "jurisdiction": "Federal",
+      "title": "Child and dependent care credit",
+      "body": "You paid for care so you could work or look for work. Keep the provider’s identifying details — not in this demo."
+    },
+    "education": {
+      "jurisdiction": "Federal",
+      "title": "Education credit (American Opportunity or Lifetime Learning)",
+      "body": "Tuition and required fees may qualify. Scholarships on Form 1098-T can reduce the credit. A helper should pick which credit fits."
+    },
+    "loan": {
+      "jurisdiction": "Federal",
+      "title": "Student-loan interest deduction",
+      "body": "Interest you paid on a qualified student loan, even if no 1098-E arrived because the amount was under $600."
+    },
+    "saver": {
+      "jurisdiction": "Federal",
+      "title": "Saver’s Credit",
+      "body": "A credit for retirement contributions. Full-time students are often excluded, so treat this as a maybe until a helper checks."
+    },
+    "property": {
+      "jurisdiction": "Illinois",
+      "title": "Illinois property tax credit",
+      "body": "Homeowners who paid 2025 Illinois property tax may get a credit. Renters skip this. Bring the bill and proof of payment."
+    },
+    "k12": {
+      "jurisdiction": "Illinois",
+      "title": "Illinois K–12 education expense credit",
+      "body": "Qualified K–12 tuition, books, or lab fees — not ordinary school supplies."
+    },
+    "premium": {
+      "jurisdiction": "Federal",
+      "title": "Premium tax credit (Form 8962)",
+      "body": "Required if you had Marketplace coverage with advance credits. You need Form 1095-A before most e-files will go through."
+    },
+    "tips": {
+      "jurisdiction": "Federal",
+      "title": "Tip and overtime reporting",
+      "body": "Tips belong on the return even if they were not on a W-2. Keep pay stubs that separate tips."
+    },
+    "review": {
+      "jurisdiction": "Review",
+      "title": "Human review flagged",
+      "body": "You chose a path that needs a person — Marketplace, extra complexity, or similar. Use VITA or a trusted preparer before you file."
+    }
+  }
+}

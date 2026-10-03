@@ -1,6 +1,19 @@
 import type { Metadata } from "next";
 import "./globals.css";
-export const metadata: Metadata = { title: "Frontend starter", description: "Next.js and Tailwind starter" };
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}</body></html>;
+import LanguageProvider from "@/i18n/LanguageProvider";
+
+export const metadata: Metadata = {
+  title: "KEENFinance",
+  description:
+    "A friendly Illinois tax-year 2025 guide for young adults in Champaign. We prepare the checklist; you file the return.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en">
+      <body><LanguageProvider>{children}</LanguageProvider></body>
+    </html>
+  );
 }
