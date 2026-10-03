@@ -1,3 +1,4 @@
+import { isSameOrigin } from "@/utils/supabase/origin";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
@@ -14,8 +15,7 @@ async function handle(request: Request, context: Context) {
     getTableDefinition(table);
     const supabase = createClient(await cookies());
     if (request.method !== "GET") {
-      const origin = request.headers.get("origin");
-      if (origin && origin !== new URL(request.url).origin) {
+      if (!isSameOrigin(request)) {
         throw new TableRequestError("INVALID_ORIGIN", 403, "Same-origin request required.");
       }
       const { data, error } = await supabase.auth.getClaims();

@@ -1,10 +1,10 @@
+import { isSameOrigin } from "@/utils/supabase/origin";
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 import { DocumentError } from './tax-extraction.mjs';
 
 export async function documentSession(request: Request) {
-  const origin = request.headers.get('origin');
-  if (origin && origin !== new URL(request.url).origin) throw new DocumentError('INVALID_ORIGIN', 403, 'Same-origin request required.');
+  if (!isSameOrigin(request)) throw new DocumentError('INVALID_ORIGIN', 403, 'Same-origin request required.');
   const client = createClient(await cookies());
   const { data, error } = await client.auth.getUser();
   if (error || !data.user) throw new DocumentError('AUTH_REQUIRED', 401, 'Sign in to access your tax forms.');

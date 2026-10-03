@@ -54,6 +54,12 @@ function publicUser(user: User | null) {
 
 /** Request-scoped Node helpers. Sessions remain in SSR cookies, never response bodies. */
 export function createUserFunctions(client: SupabaseClient) {
+  async function ensureProfile(id: string) {
+    const { error } = await client.from("profiles").upsert({ id }, { onConflict: "id", ignoreDuplicates: true });
+    if (error) throw new UserRequestError("PROFILE_UNAVAILABLE", 503, "Your session exists, but your database profile could not be saved. Check profiles permissions.");
+    const { data, error: readError } = await client.from("profiles").select("id").eq("id", id).single();
+    if (readError || !data) throw new UserRequestError("PROFILE_UNAVAILABLE", 503, "Unable to verify your database profile.");
+  }
   async function getCurrentUser() {
     const { data, error } = await client.auth.getUser();
     if (error?.name === "AuthSessionMissingError") return null;
@@ -70,10 +76,11 @@ export function createUserFunctions(client: SupabaseClient) {
       }
       // A username labels a guest; it never authenticates an existing account.
       const existingUser = await getCurrentUser();
-      if (existingUser) return { user: existingUser };
+      if (existingUser) { await ensureProfile(existingUser.id); return { user: existingUser }; }
       const { data, error } = await client.auth.signInAnonymously({ options: { data: { username, display_name: username } } });
       authError(error);
       if (!data.user || !data.session) throw new UserRequestError("AUTH_REQUEST_FAILED", 503, "Unable to start a guest session.");
+      if (data.user) await ensureProfile(data.user.id);
       return { user: publicUser(data.user) };
     },
     async createUser(input: Record<string, unknown>) {
@@ -81,12 +88,14 @@ export function createUserFunctions(client: SupabaseClient) {
       const metadata = input.displayName === undefined ? {} : { display_name: text(input.displayName, "display name", 100).trim() };
       const { data, error } = await client.auth.signUp({ email: email(input.email), password: password(input.password, true), options: { data: metadata } });
       authError(error);
+      if (data.session && data.user) await ensureProfile(data.user.id);
       return { user: publicUser(data.user), confirmationRequired: !data.session };
     },
     async signIn(input: Record<string, unknown>) {
       requireObject(input);
       const { data, error } = await client.auth.signInWithPassword({ email: email(input.email), password: password(input.password) });
       authError(error);
+      if (data.user) await ensureProfile(data.user.id);
       return { user: publicUser(data.user) };
     },
     async signOut() {
@@ -115,6 +124,7 @@ export function createUserFunctions(client: SupabaseClient) {
       if (!await getCurrentUser()) throw new UserRequestError("AUTH_REQUIRED", 401, "Sign in before updating your account.");
       const { data, error } = await client.auth.updateUser(changes);
       authError(error);
+      if (data.user) await ensureProfile(data.user.id);
       return { user: publicUser(data.user) };
     },
     async confirmEmail(input: Record<string, unknown>) {
@@ -126,12 +136,14 @@ export function createUserFunctions(client: SupabaseClient) {
       }
       const { data, error } = await client.auth.verifyOtp({ token_hash, type });
       authError(error);
+      if (data.user) await ensureProfile(data.user.id);
       return { user: publicUser(data.user) };
     },
     async exchangeCode(input: Record<string, unknown>) {
       requireObject(input);
       const { data, error } = await client.auth.exchangeCodeForSession(text(input.code, "authorization code", 2048));
       authError(error);
+      if (data.user) await ensureProfile(data.user.id);
       return { user: publicUser(data.user) };
     },
   };
