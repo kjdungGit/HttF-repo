@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import i18n from "@/i18n/client";
 import { SpeechControls } from "./guide/SpeechControls";
 import { useSpeech, type SpeechLang } from "./guide/useSpeech";
+import { requestGoToService } from "./GoToService";
 
 export default function IntroPage() {
-  const router = useRouter();
   const { t, i18n: i18nInstance } = useTranslation();
   const lang: SpeechLang = i18nInstance.language.startsWith("es") ? "es" : "en";
   const speech = useSpeech(lang);
@@ -29,7 +28,7 @@ export default function IntroPage() {
 
   function startFiling() {
     setLeaving(true);
-    window.setTimeout(() => router.push("/file"), 420);
+    requestGoToService();
   }
 
   const speechLabels = {
@@ -204,10 +203,6 @@ export default function IntroPage() {
             ↓
           </span>
         </button>
-      ) : null}
-
-      {leaving ? (
-        <div className="pointer-events-none fixed inset-0 z-30 bg-white/90" />
       ) : null}
     </main>
   );
