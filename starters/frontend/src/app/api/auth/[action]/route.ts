@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { clearGuestUser, readGuestUser, writeGuestUser } from "@/utils/supabase/guest-session";
+import { isSameOrigin } from "@/utils/supabase/origin";
 import { createUserFunctions, requireObject, UserRequestError } from "@/utils/supabase/users";
 
 type Context = { params: Promise<{ action: string }> };
@@ -20,8 +20,7 @@ async function handle(request: Request, context: Context) {
     }
     let body: Record<string, unknown> = {};
     if (request.method !== "GET") {
-      const origin = request.headers.get("origin");
-      if (origin && origin !== new URL(request.url).origin) throw new UserRequestError("INVALID_ORIGIN", 403, "Same-origin request required.");
+      if (!isSameOrigin(request)) throw new UserRequestError("INVALID_ORIGIN", 403, "Same-origin request required.");
       if (action !== "logout") {
         try { body = requireObject(await request.json()); } catch (error) {
           if (error instanceof UserRequestError) throw error;
@@ -35,29 +34,18 @@ async function handle(request: Request, context: Context) {
     if (action === "user") {
       if (request.method === "PATCH") result = await users.updateUser(body);
       else {
-        const user = await users.getCurrentUser() ?? readGuestUser(jar);
+        const user = await users.getCurrentUser();
         if (!user) throw new UserRequestError("AUTH_REQUIRED", 401, "No authenticated user.");
         result = { user };
       }
     } else if (action === "guest") {
-      try {
-        result = await users.signInWithUsername(body);
-        clearGuestUser(jar);
-      } catch (error) {
-        if (!(error instanceof UserRequestError) || error.code !== "GUEST_SIGNIN_DISABLED") throw error;
-        const username = typeof body.username === "string" ? body.username.trim() : "";
-        result = writeGuestUser(jar, username);
-      }
+      result = await users.signInWithUsername(body);
+      jar.delete("kf-guest");
     } else if (action === "signup") result = await users.createUser(body);
     else if (action === "login") result = await users.signIn(body);
     else if (action === "logout") {
-      clearGuestUser(jar);
-      try {
-        result = await users.signOut();
-      } catch (error) {
-        if (!(error instanceof UserRequestError)) throw error;
-        result = { signedOut: true };
-      }
+      jar.delete("kf-guest");
+      result = await users.signOut();
     }
     else if (action === "reset-password") result = await users.requestPasswordReset(body);
     else if (action === "confirm") result = await users.confirmEmail(body);

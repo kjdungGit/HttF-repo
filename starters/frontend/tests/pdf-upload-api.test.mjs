@@ -72,6 +72,7 @@ test('document authentication helper checks origin and validates the real curren
     'next/headers': { cookies: async () => ({}) },
     '@/utils/supabase/server': { createClient: () => ({ auth: { getUser: async () => { lookups++; return { data: { user: null }, error: null }; } } }) },
     './tax-extraction.mjs': extraction,
+    '@/utils/supabase/origin': moduleFrom('../src/utils/supabase/origin.ts', {}),
   });
   await assert.rejects(authModule.documentClient(new Request('http://localhost/api/documents/upload', { method: 'POST', headers: { origin: 'https://foreign.test' } })), error => error.status === 403);
   assert.equal(lookups, 0);

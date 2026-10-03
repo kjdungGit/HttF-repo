@@ -13,6 +13,7 @@ function compile(path, dependencies) {
   vm.runInNewContext(outputText, { exports, URL, require: (name) => dependencies[name] ?? require(name) });
   return exports;
 }
+const origin = compile('../src/utils/supabase/origin.ts', {});
 const registry = JSON.parse(readFileSync(new URL('../src/utils/supabase/table-registry.json', import.meta.url), 'utf8'));
 const tables = compile('../src/utils/supabase/tables.ts', { './table-registry.json': { default: registry } });
 function route(authenticated = false) {
@@ -26,6 +27,7 @@ function route(authenticated = false) {
     'next/headers': { cookies: async () => ({}) },
     '@/utils/supabase/server': { createClient: () => client },
     '@/utils/supabase/tables': tables,
+    '@/utils/supabase/origin': origin,
   });
   return { handlers, calls };
 }

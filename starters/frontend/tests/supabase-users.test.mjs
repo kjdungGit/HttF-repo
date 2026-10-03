@@ -8,6 +8,10 @@ const { outputText } = ts.transpileModule(source, { compilerOptions: { module: t
 const exports = {};
 vm.runInNewContext(outputText, { exports });
 const { createUserFunctions } = exports;
+function profileStore() {
+  let id;
+  return { upsert: async value => { id = value.id; return { error: null }; }, select: () => ({ eq: () => ({ single: async () => ({ data: { id }, error: null }) }) }) };
+}
 const user = { id: 'fixture-user', email: 'fixture@example.com', user_metadata: { display_name: 'Fixture', role: 'admin' } };
 function fixture(overrides = {}) {
   const calls = [];
@@ -15,7 +19,7 @@ function fixture(overrides = {}) {
   for (const name of ['signUp', 'signInWithPassword', 'signOut', 'getUser', 'resetPasswordForEmail', 'updateUser', 'verifyOtp', 'exchangeCodeForSession']) {
     auth[name] = async (...args) => { calls.push([name, ...args]); return overrides[name] ?? { data: { user, session: { access_token: 'secret-fixture-token' } }, error: null }; };
   }
-  return { users: createUserFunctions({ auth }), calls };
+  return { users: createUserFunctions({ auth, from: profileStore }), calls };
 }
 
 test('signup creates a user with allowed metadata and reports confirmation without leaking credentials', async () => {
@@ -77,7 +81,7 @@ test('username account creation, session restoration, logout, and fresh account 
   let current = null;
   let created = 0;
   const calls = [];
-  const users = createUserFunctions({ auth: {
+  const users = createUserFunctions({ from: profileStore, auth: {
     getUser: async () => { calls.push('getUser'); return { data: { user: current }, error: current ? null : { name: 'AuthSessionMissingError' } }; },
     signInAnonymously: async (input) => {
       calls.push('signInAnonymously');
@@ -109,7 +113,7 @@ test('invalid usernames never contact the authentication provider', async () => 
 });
 
 test('disabled anonymous sign-in reports the actionable demo configuration error', async () => {
-  const users = createUserFunctions({ auth: {
+  const users = createUserFunctions({ from: profileStore, auth: {
     getUser: async () => ({ data: { user: null }, error: { name: 'AuthSessionMissingError' } }),
     signInAnonymously: async () => ({ data: {}, error: { code: 'anonymous_provider_disabled', status: 422 } }),
   } });
