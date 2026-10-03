@@ -19,11 +19,9 @@ export default function Header({
             {kicker === "Step-by-step" ? t("header.steps") : kicker}
           </span>
         </Link>
-        <div className="flex items-center gap-4">
-          <p className="hidden text-sm text-black/70 md:block">
-            {t("header.tagline")}
-          </p>
-        </div>
+        <p className="hidden text-sm text-black/70 md:block">
+          {t("header.tagline")}
+        </p>
       </div>
       <div className="h-1 bg-gradient-to-r from-black via-uiuc to-orange" />
     </header>

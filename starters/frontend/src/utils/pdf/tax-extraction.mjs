@@ -79,6 +79,7 @@ export async function extractTaxPdf(buffer, engine) {
   if (!engine)
     pdfjs.GlobalWorkerOptions.workerSrc = "/pdfjs/pdf.worker.min.mjs";
   const task = pdfjs.getDocument({
+    verbosity: 0,
     data: new Uint8Array(buffer),
     ...(engine
       ? {}

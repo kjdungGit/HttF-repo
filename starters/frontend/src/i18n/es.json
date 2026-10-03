@@ -605,7 +605,7 @@
       "dependency": "Confirme con su familia si alguien lo declarará como dependiente.",
       "filing": "Plan federal y de Illinois — confirme el año y la residencia antes de presentar."
     },
-    "privateBackup": "La copia contiene sus respuestas y cantidades. Guárdela en privado. No incluye SSN, contraseñas ni PDFs originales.",
+    "privateBackup": "La copia contiene sus respuestas y cantidades de preparación. Guárdela de forma privada. No incluye números de Seguro Social ni PDF originales.",
     "restart": "Revisar mis respuestas",
     "blankPreview": "Las casillas vacías siguen desconocidas. Son notas de preparación, no formularios presentados.",
     "previewLoading": "Cargando la página de origen…",
@@ -618,7 +618,7 @@
   },
   "localForms": {
     "drop": "Arrastre sus PDF aquí o elija archivos",
-    "hint": "PDF de hasta 8 MB. Se leen en su dispositivo; no necesita iniciar sesión.",
+    "hint": "PDF de hasta 8 MB. Se leen en su dispositivo.",
     "choose": "Elegir PDF de impuestos",
     "savedHeading": "Registrados en este navegador",
     "checkedHint": "Los formularios marcados ya se guardaron localmente. Las casillas muestran ese estado.",

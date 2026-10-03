@@ -605,7 +605,7 @@
       "dependency": "Confirm with family whether someone will claim you as a dependent.",
       "filing": "Federal and Illinois filing plan — confirm the year and residency before filing."
     },
-    "privateBackup": "The backup contains your preparation answers and amounts. Keep it private. No SSNs, account passwords, or original PDFs are included.",
+    "privateBackup": "The backup contains your preparation answers and amounts. Keep it private. No SSNs or original PDFs are included.",
     "restart": "Review my answers",
     "blankPreview": "Blank boxes stay unknown. Values are preparation notes, not submitted tax forms.",
     "previewLoading": "Loading your source page…",
@@ -618,7 +618,7 @@
   },
   "localForms": {
     "drop": "Drop PDFs here or browse",
-    "hint": "PDFs up to 8 MB. Read locally on your device; no sign-in required.",
+    "hint": "PDFs up to 8 MB. Read locally on your device.",
     "choose": "Choose tax PDFs",
     "savedHeading": "Recorded on this browser",
     "checkedHint": "Checked forms have been recorded locally. Checkboxes show saved status.",

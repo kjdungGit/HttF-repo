@@ -64,6 +64,4 @@ createServer(async (req, res) => {
     res.writeHead(404, { "Content-Type": "text/plain" });
     res.end("Not found");
   }
-}).listen(port, "0.0.0.0", () =>
-  console.log("Static export preview running on port " + port),
-);
+}).listen(port, "0.0.0.0");

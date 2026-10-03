@@ -31,6 +31,7 @@ export default function PdfEvidencePreview({
         const data = new Uint8Array(await file.arrayBuffer());
         if (cancelled) return;
         task = pdfjs.getDocument({
+          verbosity: 0,
           data,
           standardFontDataUrl: "/pdfjs/standard_fonts/",
           wasmUrl: "/pdfjs/wasm/",
