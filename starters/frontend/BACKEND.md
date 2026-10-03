@@ -1,34 +1,78 @@
-# Server-side Supabase API
+# Server-side Supabase table functions and API
 
-The existing Next.js app hosts backend route handlers. Its page, layout, styles, and React components are unchanged. There is no browser Supabase helper. Session refresh runs only for `/api/*` requests.
+Next.js hosts these Node/server functions. Pages, layouts, styles, and React components are unchanged. No browser Supabase helper is included; session refresh runs only for `/api/*`.
 
-Run commands from `starters/frontend`:
+## Registered tables
 
-```sh
-npm ci
-# Copy .env.example to .env.local only if .env.local is missing, then configure it.
-npm run dev -- --hostname 0.0.0.0 --port 3000
+The registry in `src/utils/supabase/table-registry.json` contains only these supplied and API-verified tables in `public`:
+
+- `benefit_results`
+- `checklist_items`
+- `profiles`
+- `transactions`
+
+All four table reads and their `id` columns were verified against the live REST API. Anonymous reads returned no visible rows; that may reflect empty tables or RLS. Full column types and constraints are not available with the publishable key. Helpers validate identifier syntax and let Supabase validate actual columns/types. `id` is the configured row lookup column; its uniqueness/primary-key constraint has not been independently inspected.
+
+The nonexistent todos helper and endpoint were removed. Unregistered table requests are rejected before executing a database query.
+
+## Node/server usage
+
+```ts
+import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
+import { createTableFunctions } from '@/utils/supabase/tables';
+
+const supabase = createClient(await cookies());
+const db = createTableFunctions(supabase);
+
+await db.benefit_results.read({ limit: 25 });
+await db.checklist_items.read({ columns: ['id'], limit: 25 });
+await db.profiles.read({ where: { id: userId } });
+await db.transactions.read({ limit: 25 });
+
+// Inside a verified-user route/server action, use actual table column values:
+await db.checklist_items.insert(values);
+await db.checklist_items.update({ id: itemId }, updates);
+await db.checklist_items.delete({ id: itemId });
 ```
 
-Server-only variables are `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`. The supplied project values are already in the ignored `.env.local`. No service-role key is used. In a cloud environment requiring HTTP(S)_PROXY, Node.js 24 should start with `NODE_USE_ENV_PROXY=1`.
+Each table gets `read`, `insert`, `update`, and `delete` functions. Queries retain the supplied client's session and RLS permissions; no admin/service-role key is used. Direct server callers must enforce their own authentication before mutations. Empty updates, missing row keys, and row-key changes are rejected. Reads are capped at 100 rows.
 
-## Request
+## HTTP API
 
-```sh
-curl http://localhost:3000/api/todos
-```
+| Method/path | Request | Result |
+| --- | --- | --- |
+| `GET /api/database` | None | Registered table names |
+| `GET /api/database/{table}` | Optional `?limit=25&columns=id` | `{ table, data: [...] }` |
+| `POST /api/database/{table}` | `{ "values": { ...actualColumns } }` | Inserted rows, HTTP 201 |
+| `PATCH /api/database/{table}` | `{ "key": { "id": "row-id" }, "values": { ...actualColumns } }` | Updated rows |
+| `DELETE /api/database/{table}` | `{ "key": { "id": "row-id" } }` | Deleted rows |
 
-`GET /api/todos` returns `{ "todos": [{ "id": 1, "name": "Example" }] }`, or `{ "todos": [] }` when no rows are visible. Reads select `id, name`, order by `id`, and return at most 100 rows. The response is private and not cached. Caller session cookies and Supabase row-level security determine access. No write endpoint or schema modification is included.
+Send JSON and the existing session cookie for writes. Writes require verified auth claims, reject cross-origin browser requests, and remain subject to RLS. Rows written with return representation also need appropriate SELECT access. Unknown tables return 404; missing sessions return 401; invalid inputs return 400. Internal database details are not returned. Responses are private/no-store.
 
-Database errors return HTTP 503 with `{ "error": { "code": "TODOS_UNAVAILABLE", "message": "Unable to retrieve todos." } }`. Setup/unexpected failures return HTTP 500 with `REQUEST_FAILED`. Internal database details are not returned to callers.
+## Configuration and verification
 
-The project previously returned `PGRST205`: `todos` was not available through the API. The table must expose `id` and `name` and have SELECT policies appropriate to the intended visitors before live reads succeed. An empty response can also mean RLS hides rows from the caller.
+Run from `starters/frontend`: `npm ci`, then `npm run dev -- --hostname 0.0.0.0 --port 3000`. Supplied server-only values are already in ignored `.env.local`: `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`. Use `.env.example` only when configuration is missing. Node.js 24 needs `NODE_USE_ENV_PROXY=1` in proxy-backed cloud environments.
 
-## Helpers and validation
+Run `npm test`, `npm run lint`, `npx --no-install tsc --noEmit`, and `npm run build`. Tests cover registry targeting, bounded reads, key-scoped writes, rejected anonymous/cross-origin writes, sanitized errors, and session cookies. Live writes/RLS authorization have not been verified: tests use controlled responses and no production rows were modified.
 
-- `src/utils/supabase/server.ts`: request-scoped server client.
-- `src/utils/supabase/config.ts`: server environment configuration.
-- `src/utils/supabase/todos.ts`: bounded read helper.
-- `src/utils/supabase/middleware.ts` and `src/proxy.ts`: auth refresh, cookie propagation, and cache headers for API requests.
+## User/account helpers
 
-Run `npm test`, `npm run lint`, `npx --no-install tsc --noEmit`, and `npm run build`. Tests use controlled auth/database responses and real Next.js response/cookie primitives; they do not claim a real authenticated refresh or successful live table query.
+`src/utils/supabase/users.ts` exports `createUserFunctions(supabase)` with `createUser`, `signIn`, `signOut`, `getCurrentUser`, `requestPasswordReset`, `updateUser`, `confirmEmail`, and `exchangeCode`. Use a request-scoped server client so Supabase can persist sessions to SSR cookies.
+
+| Endpoint | Method | JSON body |
+| --- | --- | --- |
+| `/api/auth/signup` | POST | `{ "email": "...", "password": "...", "displayName": "optional" }` |
+| `/api/auth/login` | POST | `{ "email": "...", "password": "..." }` |
+| `/api/auth/logout` | POST | None; signs out current session |
+| `/api/auth/user` | GET | None; returns verified current user or 401 |
+| `/api/auth/user` | PATCH | Any of `email`, `password`, `displayName`; requires signed-in user |
+| `/api/auth/reset-password` | POST | `{ "email": "..." }` |
+| `/api/auth/confirm` | POST | `{ "tokenHash": "...", "type": "signup" }`; also accepts `email`, `recovery`, `email_change` |
+| `/api/auth/exchange-code` | POST | `{ "code": "..." }`; consumes a PKCE code with its cookie verifier |
+
+Successful signup returns HTTP 201 with limited user fields and `confirmationRequired`. Confirmation settings are controlled by Supabase; signup does not bypass them. API bodies never return access/refresh tokens. New passwords require at least 8 characters; provider requirements also apply. Reset requests return a generic eligibility message. Configure allowed site/redirect URLs and email templates in Supabase; a backend caller must submit the callback token/code to the corresponding helper endpoint. No sign-in UI or automatic redirect is introduced.
+
+Current-user lookup validates against `auth.getUser()`. Account updates cannot assign roles or arbitrary metadata. These helpers use Supabase Auth's `auth.users`; they do not automatically insert a row into `public.profiles` or any other application table. Provisioning profiles depends on your verified table schema or existing database triggers. No admin-user management or service-role key is required for these self-service helpers.
+
+User-helper tests cover validation before SDK calls, pending confirmation, token omission, verified account updates, local logout, OTP/PKCE delegation, and sanitized rate-limit errors. They use controlled responses; creating additional production accounts or sending live password-reset emails is not part of the implementation check.
