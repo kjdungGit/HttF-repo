@@ -1,6 +1,6 @@
 # Server-side Supabase table functions and API
 
-Next.js hosts these Node/server functions. Pages, layouts, styles, and React components are unchanged. No browser Supabase helper is included; session refresh runs only for `/api/*`.
+Next.js hosts these Node/server functions. The shared header now includes an account avatar and sign-in/create-account dialogs. They call the server auth APIs; no browser Supabase SDK helper is included. Session refresh runs only for `/api/*`.
 
 ## Registered tables
 
@@ -71,8 +71,15 @@ Run `npm test`, `npm run lint`, `npx --no-install tsc --noEmit`, and `npm run bu
 | `/api/auth/confirm` | POST | `{ "tokenHash": "...", "type": "signup" }`; also accepts `email`, `recovery`, `email_change` |
 | `/api/auth/exchange-code` | POST | `{ "code": "..." }`; consumes a PKCE code with its cookie verifier |
 
-Successful signup returns HTTP 201 with limited user fields and `confirmationRequired`. Confirmation settings are controlled by Supabase; signup does not bypass them. API bodies never return access/refresh tokens. New passwords require at least 8 characters; provider requirements also apply. Reset requests return a generic eligibility message. Configure allowed site/redirect URLs and email templates in Supabase; a backend caller must submit the callback token/code to the corresponding helper endpoint. No sign-in UI or automatic redirect is introduced.
+Successful signup returns HTTP 201 with limited user fields and `confirmationRequired`. Confirmation settings are controlled by Supabase; signup does not bypass them. API bodies never return access/refresh tokens. New passwords require at least 8 characters; provider requirements also apply. Reset requests return a generic eligibility message. Configure allowed site/redirect URLs and email templates in Supabase; a backend caller must submit the callback token/code to the corresponding helper endpoint. The shared header uses these endpoints for sign-in, account creation, current-user lookup, and logout. Email-confirmation responses display a check-your-email state and require confirmation before sign-in; no authenticated state is fabricated.
 
 Current-user lookup validates against `auth.getUser()`. Account updates cannot assign roles or arbitrary metadata. These helpers use Supabase Auth's `auth.users`; they do not automatically insert a row into `public.profiles` or any other application table. Provisioning profiles depends on your verified table schema or existing database triggers. No admin-user management or service-role key is required for these self-service helpers.
 
 User-helper tests cover validation before SDK calls, pending confirmation, token omission, verified account updates, local logout, OTP/PKCE delegation, and sanitized rate-limit errors. They use controlled responses; creating additional production accounts or sending live password-reset emails is not part of the implementation check.
+
+
+## Header account display
+
+`src/components/UserMenu.tsx` checks `/api/auth/user` when mounted. Anonymous users see a gray avatar and sign-in button; authenticated users see a colored avatar and their saved display name (or email prefix). Native modal dialogs provide sign-in, create-account switching, confirmation feedback, account details, and logout, with keyboard focus and Escape handling. Signup sends `displayName`, email, and password to the backend, which persists the user and name metadata in `auth.users`. It does not guess or mutate `public.profiles` columns.
+
+Browser smoke checks passed for the actual anonymous endpoint and for signup/confirmation, failed/successful login, reload, and logout with controlled API responses. The mobile modal was checked at 375px width. These checks did not create another live account or send confirmation email. Backend tests remain 22 passing checks.
